@@ -55,17 +55,17 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="px-6 py-24 lg:px-0">
       <h2 className="section-heading">Featured Projects</h2>
       <div className="space-y-24">
         {projects.map((project, index) => (
           <div
             key={project.title}
             className={`flex flex-col ${
-              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
             } gap-8 items-center`}
           >
-            <div className="relative flex-1 group">
+            <div className="relative flex-1 w-full group">
               <img
                 src={project.image}
                 alt={project.title}
@@ -94,7 +94,7 @@ export default function Projects() {
                 </div>
               </div>
             </div>
-            <div className="flex-1 space-y-4">
+            <div className="flex-1 w-full space-y-4">
               <h3 className="text-2xl font-bold text-[var(--lightest-slate)]">
                 {project.title}
               </h3>
