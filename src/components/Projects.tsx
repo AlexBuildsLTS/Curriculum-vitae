@@ -13,6 +13,16 @@ interface Project {
 export default function Projects() {
   const projects: Project[] = [
     {
+      title: "Growth Analytics",
+      description:
+        "Frontend developed for a growth analytics tool, integrating data visualization features for business metrics.",
+      image:
+        "https://www.mercy.edu/sites/default/files/2020-07/iStock-1150199386.jpg", // Updated with the correct image URL
+      technologies: ["React", "Chart.js", "HTML/CSS"],
+      githubUrl: "https://github.com/AlexBuildsLTS/growth-project",
+      progress: 60,
+    },
+    {
       title: "Marketplace App",
       description:
         "A comprehensive marketplace application with robust backend and intuitive frontend, focusing on user experience and scalability.",
@@ -21,16 +31,6 @@ export default function Projects() {
       technologies: ["Java", "Spring Boot", "React", "SQL"],
       githubUrl: "https://github.com/AlexBuildsLTS/marketplace-app",
       progress: 50,
-    },
-    {
-      title: "Growth Analytics",
-      description:
-        "Frontend developed for a growth analytics tool, integrating data visualization features for business metrics.",
-      image:
-        "https://images.unsplash.com/photo-1580894742410-241c7a627d63?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      technologies: ["React", "Chart.js", "HTML/CSS"],
-      githubUrl: "https://github.com/AlexBuildsLTS/growth-project",
-      progress: 60,
     },
     {
       title: "Online Bookstore",
@@ -55,21 +55,21 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="px-6 py-24 lg:px-0">
+    <section id="projects" className="py-24">
       <h2 className="section-heading">Featured Projects</h2>
       <div className="space-y-24">
         {projects.map((project, index) => (
           <div
             key={project.title}
             className={`flex flex-col ${
-              index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
             } gap-8 items-center`}
           >
-            <div className="relative flex-1 w-full group">
+            <div className="relative flex-1 group">
               <img
                 src={project.image}
                 alt={project.title}
-                className="object-cover w-full rounded-lg aspect-video"
+                className="object-cover w-full h-64 rounded-lg"
               />
               <div className="absolute inset-0 bg-[var(--navy-primary)]/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="flex gap-4">
@@ -94,7 +94,7 @@ export default function Projects() {
                 </div>
               </div>
             </div>
-            <div className="flex-1 w-full space-y-4">
+            <div className="flex-1 space-y-4">
               <h3 className="text-2xl font-bold text-[var(--lightest-slate)]">
                 {project.title}
               </h3>

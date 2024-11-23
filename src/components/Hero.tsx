@@ -9,18 +9,14 @@ export default function Hero() {
           Alex Youssef.
         </h2>
         <h3 className="mb-6 text-xl font-bold sm:text-5xl text-slate-light">
-          I build things for the web.
+          I’m passionate about crafting accessible, human-centered web applications.
         </h3>
         <p className="max-w-xl mb-8 text-base sm:text-lg text-slate-light">
-          I'm a Java Fullstack Developer specializing in building exceptional digital experiences.
-          Currently focused on building accessible, human-centered products. My recent work includes 
+          With a strong focus on scalable backend architecture and intuitive user interfaces, 
+          I specialize in building exceptional digital experiences. My recent work includes 
           developing a marketplace app, a growth analytics tool, and an online bookstore platform.
         </p>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-          <a href="#projects" className="w-full mb-4 btn-primary sm:w-auto sm:mb-0">
-            Check out my work
-          </a>
-        </div>
+        <a href="#projects" className="btn-primary">Check out my work</a>
       </div>
     </section>
   );
