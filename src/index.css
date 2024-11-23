@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy-primary: #0a192f;
+    --navy-light: #112240;
+    --navy-lightest: #233554;
+    --slate: #8892b0;
+    --light-slate: #a8b2d1;
+    --lightest-slate: #ccd6f6;
+    --white: #e6f1ff;
+    --green: #64ffda;
+  }
+
+  body {
+    @apply bg-[var(--navy-primary)] text-[var(--slate)] font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-[var(--lightest-slate)];
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-[var(--slate)] hover:text-[var(--green)] transition-colors duration-300;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 border border-[var(--green)] text-[var(--green)] 
+           rounded bg-transparent hover:bg-[var(--green)] hover:bg-opacity-10 
+           transition-all duration-300;
+  }
+
+  .section-heading {
+    @apply text-2xl md:text-3xl font-bold mb-8 text-[var(--lightest-slate)] 
+           flex items-center gap-4 after:content-[''] after:flex-1 
+           after:h-[1px] after:bg-[var(--navy-lightest)];
+  }
+
+  .skill-bar {
+    @apply h-2 rounded-full bg-[var(--navy-lightest)] overflow-hidden;
+  }
+
+  .skill-progress {
+    @apply h-full bg-[var(--green)] transition-all duration-1000;
+  }
+
+  .vertical-text {
+    @apply [writing-mode:vertical-rl] tracking-widest;
+  }
+}
