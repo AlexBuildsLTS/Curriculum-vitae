@@ -40,27 +40,35 @@ export default function Skills() {
 
   const categories = Array.from(new Set(skills.map(skill => skill.category)));
 
+  // Function to calculate the color based on the skill level
+  const getSkillColor = (level: number) => {
+    // Convert level to a value between 0 and 120 (hue range for red to green)
+    const hue = (level * 120) / 100; // 0 (red) to 120 (green)
+    return `hsl(${hue}, 100%, 50%)`;
+  };
+
   return (
     <section id="skills" className="py-24">
       <h2 className="section-heading">Skills</h2>
-      <div id="skills-section" className="grid md:grid-cols-2 gap-12">
+      <div id="skills-section" className="grid gap-12 md:grid-cols-2">
         {categories.map((category) => (
           <div key={category} className="space-y-6">
-            <h3 className="text-xl font-semibold text-[var(--green)] mb-4">{category}</h3>
+            <h3 className="mb-4 text-xl font-semibold text-green">{category}</h3>
             {skills
               .filter(skill => skill.category === category)
               .map((skill) => (
                 <div key={skill.name} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[var(--light-slate)]">{skill.name}</span>
-                    <span className="text-[var(--green)]">{skill.level}%</span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-light-slate">{skill.name}</span>
+                    <span className="text-green">{skill.level}%</span>
                   </div>
                   <div className="skill-bar">
-                    <div 
+                    <div
                       className="skill-progress"
-                      style={{ 
+                      style={{
                         width: isVisible ? `${skill.level}%` : '0%',
-                        transition: `width 1s ease-out ${Math.random() * 0.5}s`
+                        backgroundColor: getSkillColor(skill.level),
+                        transition: `width 1s ease-out ${Math.random() * 0.5}s`,
                       }}
                     />
                   </div>

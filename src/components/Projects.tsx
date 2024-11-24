@@ -56,6 +56,13 @@ export default function Projects() {
     },
   ];
 
+  // Function to calculate the color based on the progress percentage
+  const getProgressColor = (progress: number) => {
+    // Map progress (0-100) to hue (0-120), where 0 is red and 120 is green
+    const hue = (progress * 120) / 100;
+    return `hsl(${hue}, 100%, 50%)`;
+  };
+
   return (
     <section id="projects" className="py-24">
       <h2 className="section-heading">Featured Projects</h2>
@@ -79,7 +86,7 @@ export default function Projects() {
             <div className="flex-1 space-y-4">
               {/* Project Title and Icons */}
               <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-bold text-[var(--lightest-slate)]">
+                <h3 className="text-2xl font-bold text-slate-lightest">
                   {project.title}
                 </h3>
                 <div className="flex gap-4">
@@ -88,7 +95,7 @@ export default function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View GitHub Repository"
-                    className="text-[var(--green)] hover:text-[var(--lightest-slate)]"
+                    className="text-green hover:text-slate-lightest"
                   >
                     <Icons.Github size={24} />
                   </a>
@@ -98,22 +105,21 @@ export default function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="View Live Demo"
-                      className="text-[var(--green)] hover:text-[var(--lightest-slate)]"
+                      className="text-green hover:text-slate-lightest"
                     >
                       <Icons.ExternalLink size={24} />
-                      {/* You can use Icons.Monitor or another icon if preferred */}
                     </a>
                   )}
                 </div>
               </div>
               {/* Project Description */}
-              <p className="text-[var(--slate)]">{project.description}</p>
+              <p className="text-slate">{project.description}</p>
               {/* Technologies */}
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 text-sm text-[var(--green)] border border-[var(--green)] rounded"
+                    className="px-3 py-1 text-sm border rounded text-green border-green"
                   >
                     {tech}
                   </span>
@@ -122,13 +128,16 @@ export default function Projects() {
               {/* Progress Bar */}
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-[var(--light-slate)]">Progress</span>
-                  <span className="text-[var(--green)]">{project.progress}%</span>
+                  <span className="text-slate-light">Progress</span>
+                  <span className="text-green">{project.progress}%</span>
                 </div>
                 <div className="skill-bar">
                   <div
                     className="skill-progress"
-                    style={{ width: `${project.progress}%` }}
+                    style={{
+                      width: `${project.progress}%`,
+                      backgroundColor: getProgressColor(project.progress),
+                    }}
                   />
                 </div>
               </div>
