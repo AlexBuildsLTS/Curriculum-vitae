@@ -13,14 +13,14 @@ exports.handler = async (event) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'alex.f.youssef@gmail.com', // Replace with your Gmail address
-      pass: 'wtev adzl tcyz blwm',   // Replace with your Gmail app password
+      user: 'alex.f.youssef@gmail.com', 
+      pass: 'wtev adzl tcyz blwm',   
     },
   });
 
   const mailOptions = {
     from: email,
-    to: 'your-gmail@gmail.com', // Replace with your Gmail address
+    to: 'alex.f.youssef@gmail.com', 
     subject: `New Contact Form Submission from ${name}`,
     text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
   };
