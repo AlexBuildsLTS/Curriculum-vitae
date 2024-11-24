@@ -1,4 +1,7 @@
+// Navbar.tsx
+
 import * as Icons from 'lucide-react';
+import profilePicture from '../assets/profilepicture.png'; // Adjust the path as necessary
 
 interface NavbarProps {
   isMenuOpen: boolean;
@@ -14,12 +17,19 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
   ];
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-[var(--navy-primary)]/90 backdrop-blur-sm py-4 px-6 lg:px-24">
+    <nav className="fixed top-0 z-50 w-full px-6 py-4 bg-navy-primary/90 backdrop-blur-sm lg:px-24">
       <div className="flex items-center justify-between">
-        <a href="#" className="text-[var(--green)] text-2xl font-bold">AY</a>
+        {/* Profile Picture */}
+        <a href="#" className="flex items-center">
+          <img
+            src={profilePicture}
+            alt="Profile"
+            className="object-cover rounded-full w-14 h-14"
+          />
+        </a>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="items-center hidden gap-8 md:flex">
           {navItems.map((item, index) => (
             <a
               key={item.href}
@@ -30,12 +40,14 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
               {item.label}
             </a>
           ))}
-          <a href="/resume.pdf" className="btn-primary">Resume</a>
+          <a href="/resume.pdf" className="btn-primary">
+            Resume
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-[var(--green)]"
+          className="text-green md:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <Icons.X size={24} /> : <Icons.Menu size={24} />}
@@ -44,19 +56,21 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-[var(--navy-light)] py-4">
+        <div className="absolute left-0 w-full py-4 md:hidden top-full bg-navy-light">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="block py-2 px-6 nav-link"
+              className="block px-6 py-2 nav-link"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
             </a>
           ))}
           <div className="px-6 pt-4">
-            <a href="/resume.pdf" className="btn-primary inline-block">Resume</a>
+            <a href="/resume.pdf" className="inline-block btn-primary">
+              Resume
+            </a>
           </div>
         </div>
       )}

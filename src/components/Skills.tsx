@@ -1,3 +1,5 @@
+// Skills.tsx
+
 import { useState, useEffect } from 'react';
 
 interface Skill {
@@ -10,14 +12,19 @@ export default function Skills() {
   const [isVisible, setIsVisible] = useState(false);
 
   const skills: Skill[] = [
+    // Existing skills
     { name: 'Java', level: 85, category: 'Languages' },
-    { name: 'Spring Boot', level: 70, category: 'Backend' },
     { name: 'JavaScript', level: 50, category: 'Languages' },
+    { name: 'Spring Boot', level: 70, category: 'Backend' },
+    { name: 'RESTful APIs', level: 60, category: 'Backend' },
     { name: 'React', level: 30, category: 'Frontend' },
     { name: 'HTML/CSS', level: 70, category: 'Frontend' },
     { name: 'SQL', level: 50, category: 'Database' },
     { name: 'Git & GitHub', level: 80, category: 'Tools' },
-    { name: 'RESTful APIs', level: 60, category: 'Backend' },
+    // New skills
+    { name: 'VMware Workstation Pro', level: 90, category: 'Tools' },
+    { name: 'Ubuntu/Linux', level: 75, category: 'Operating Systems' },
+    { name: 'Kali Linux', level: 50, category: 'Operating Systems' },
   ];
 
   useEffect(() => {
@@ -25,6 +32,7 @@ export default function Skills() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          observer.disconnect(); // Disconnect after it's visible to avoid unnecessary calls
         }
       },
       { threshold: 0.1 }
@@ -34,11 +42,11 @@ export default function Skills() {
     if (element) observer.observe(element);
 
     return () => {
-      if (element) observer.unobserve(element);
+      observer.disconnect();
     };
   }, []);
 
-  const categories = Array.from(new Set(skills.map(skill => skill.category)));
+  const categories = Array.from(new Set(skills.map((skill) => skill.category)));
 
   // Function to calculate the color based on the skill level
   const getSkillColor = (level: number) => {
@@ -55,7 +63,7 @@ export default function Skills() {
           <div key={category} className="space-y-6">
             <h3 className="mb-4 text-xl font-semibold text-green">{category}</h3>
             {skills
-              .filter(skill => skill.category === category)
+              .filter((skill) => skill.category === category)
               .map((skill) => (
                 <div key={skill.name} className="space-y-2">
                   <div className="flex items-center justify-between">
