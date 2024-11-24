@@ -19,11 +19,12 @@ export default function Projects() {
       description:
         'Frontend developed for a growth analytics tool, integrating data visualization features for business metrics.',
       image: 'https://www.mercy.edu/sites/default/files/2020-07/iStock-1150199386.jpg',
-      technologies: ['React', 'Chart.js', 'HTML/CSS'],
+      technologies: ['React', 'TypeScript', 'Chart.js', 'Vite', 'Tailwind CSS'],
       githubUrl: 'https://github.com/AlexBuildsLTS/Growth-Analytics-demo',
       liveUrl: 'https://growthdemo.netlify.app/',
-      progress: 60,
+      progress: 78,
     },
+    
     {
       title: 'Marketplace App',
       description:
