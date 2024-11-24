@@ -1,3 +1,5 @@
+// Projects.tsx
+
 import * as Icons from 'lucide-react';
 
 interface Project {
@@ -13,43 +15,43 @@ interface Project {
 export default function Projects() {
   const projects: Project[] = [
     {
-      title: "Growth Analytics",
+      title: 'Growth Analytics',
       description:
-        "Frontend developed for a growth analytics tool, integrating data visualization features for business metrics.",
-      image:
-        "https://www.mercy.edu/sites/default/files/2020-07/iStock-1150199386.jpg", // Updated with the correct image URL
-      technologies: ["React", "Chart.js", "HTML/CSS"],
-      githubUrl: "https://github.com/AlexBuildsLTS/growth-project",
+        'Frontend developed for a growth analytics tool, integrating data visualization features for business metrics.',
+      image: 'https://www.mercy.edu/sites/default/files/2020-07/iStock-1150199386.jpg',
+      technologies: ['React', 'Chart.js', 'HTML/CSS'],
+      githubUrl: 'https://github.com/AlexBuildsLTS/Growth-Analytics-demo',
+      liveUrl: 'https://growthdemo.netlify.app/',
       progress: 60,
     },
     {
-      title: "Marketplace App",
+      title: 'Marketplace App',
       description:
-        "A comprehensive marketplace application with robust backend and intuitive frontend, focusing on user experience and scalability.",
+        'A comprehensive marketplace application with robust backend and intuitive frontend, focusing on user experience and scalability.',
       image:
-        "https://images.unsplash.com/photo-1549298916-f52d724204b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      technologies: ["Java", "Spring Boot", "React", "SQL"],
-      githubUrl: "https://github.com/AlexBuildsLTS/marketplace-app",
+        'https://images.unsplash.com/photo-1549298916-f52d724204b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      technologies: ['Java', 'Spring Boot', 'React', 'SQL'],
+      githubUrl: 'https://github.com/AlexBuildsLTS/marketplace-app',
       progress: 50,
     },
     {
-      title: "Online Bookstore",
+      title: 'Online Bookstore',
       description:
-        "Developed a full-stack e-commerce web application for an online bookstore. Implemented user authentication, product catalog, shopping cart, and order processing features.",
+        'Developed a full-stack e-commerce web application for an online bookstore. Implemented user authentication, product catalog, shopping cart, and order processing features.',
       image:
-        "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      technologies: ["Java", "Spring Boot", "React", "MySQL"],
-      githubUrl: "https://github.com/AlexBuildsLTS/online-bookstore",
+        'https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      technologies: ['Java', 'Spring Boot', 'React', 'MySQL'],
+      githubUrl: 'https://github.com/AlexBuildsLTS/online-bookstore',
       progress: 80,
     },
     {
-      title: "Connectify",
+      title: 'Connectify',
       description:
-        "Created a social networking platform that allows users to create profiles, connect with friends, and share updates. The project focuses on scalability and real-time communication using WebSockets.",
+        'Created a social networking platform that allows users to create profiles, connect with friends, and share updates. The project focuses on scalability and real-time communication using WebSockets.',
       image:
-        "https://images.unsplash.com/photo-1519241047957-be31d7379a5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      technologies: ["Java", "Spring Boot", "React", "WebSocket", "MongoDB"],
-      githubUrl: "https://github.com/AlexBuildsLTS/connectify",
+        'https://images.unsplash.com/photo-1519241047957-be31d7379a5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      technologies: ['Java', 'Spring Boot', 'React', 'WebSocket', 'MongoDB'],
+      githubUrl: 'https://github.com/AlexBuildsLTS/connectify',
       progress: 70,
     },
   ];
@@ -62,21 +64,30 @@ export default function Projects() {
           <div
             key={project.title}
             className={`flex flex-col ${
-              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
             } gap-8 items-center`}
           >
-            <div className="relative flex-1 group">
+            {/* Project Image */}
+            <div className="relative flex-1">
               <img
                 src={project.image}
                 alt={project.title}
                 className="object-cover w-full h-64 rounded-lg"
               />
-              <div className="absolute inset-0 bg-[var(--navy-primary)]/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+            {/* Project Details */}
+            <div className="flex-1 space-y-4">
+              {/* Project Title and Icons */}
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold text-[var(--lightest-slate)]">
+                  {project.title}
+                </h3>
                 <div className="flex gap-4">
                   <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="View GitHub Repository"
                     className="text-[var(--green)] hover:text-[var(--lightest-slate)]"
                   >
                     <Icons.Github size={24} />
@@ -86,19 +97,18 @@ export default function Projects() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="View Live Demo"
                       className="text-[var(--green)] hover:text-[var(--lightest-slate)]"
                     >
                       <Icons.ExternalLink size={24} />
+                      {/* You can use Icons.Monitor or another icon if preferred */}
                     </a>
                   )}
                 </div>
               </div>
-            </div>
-            <div className="flex-1 space-y-4">
-              <h3 className="text-2xl font-bold text-[var(--lightest-slate)]">
-                {project.title}
-              </h3>
+              {/* Project Description */}
               <p className="text-[var(--slate)]">{project.description}</p>
+              {/* Technologies */}
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                   <span
@@ -109,12 +119,11 @@ export default function Projects() {
                   </span>
                 ))}
               </div>
+              {/* Progress Bar */}
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-[var(--light-slate)]">Progress</span>
-                  <span className="text-[var(--green)]">
-                    {project.progress}%
-                  </span>
+                  <span className="text-[var(--green)]">{project.progress}%</span>
                 </div>
                 <div className="skill-bar">
                   <div
