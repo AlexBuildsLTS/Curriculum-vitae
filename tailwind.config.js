@@ -2,6 +2,7 @@
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // Enable class-based dark mode
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'], // Ensure Tailwind scans all relevant files
   theme: {
     extend: {
@@ -18,24 +19,12 @@ module.exports = {
         },
         white: '#e6f1ff',
         green: '#64ffda',
+        // Add more colors as needed
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'], // Using Inter as the default sans-serif font
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
-      animation: {
-        'slide-up': 'slideUp 0.5s ease-out forwards',
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-      },
-      keyframes: {
-        slideUp: {
-          '0%': { transform: 'translateY(100px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-      },
+      // Add any additional customizations
     },
   },
   plugins: [],
