@@ -1,9 +1,12 @@
+// src/App.tsx
+
 import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import MeetingCalendar from './components/MeetingCalendar';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import * as Icons from 'lucide-react';
@@ -20,13 +23,14 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <MeetingCalendar /> {/* Newly Added Component */}
         <Contact />
       </main>
 
       <Footer />
 
       {/* Social Links */}
-      <div className="fixed left-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-[var(--slate)]">
+      <div className="fixed left-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
         <a href="https://github.com/AlexBuildsLTS" target="_blank" rel="noopener noreferrer" className="nav-link">
           <Icons.Github size={20} />
         </a>
@@ -36,7 +40,7 @@ function App() {
       </div>
 
       {/* Email */}
-      <div className="fixed right-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-[var(--slate)]">
+      <div className="fixed right-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
         <a href="mailto:alex.youssef@live.com" className="nav-link vertical-text">alex.youssef@live.com</a>
       </div>
     </div>
