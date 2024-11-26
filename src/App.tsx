@@ -23,7 +23,7 @@ function App() {
         <About />
         <Skills />
         <Projects />
-        <MeetingCalendar /> {/* Newly Added Component */}
+        <MeetingCalendar /> 
         <Contact />
       </main>
 
@@ -31,10 +31,10 @@ function App() {
 
       {/* Social Links */}
       <div className="fixed left-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
-        <a href="https://github.com/AlexBuildsLTS" target="_blank" rel="noopener noreferrer" className="nav-link">
+        <a href="https://github.com/AlexBuildsLTS" target="_blank" rel="noopener noreferrer" className="nav-link" title="GitHub Profile">
           <Icons.Github size={20} />
         </a>
-        <a href="https://www.linkedin.com/in/alex-youssef-02512a335/" target="_blank" rel="noopener noreferrer" className="nav-link">
+        <a href="https://www.linkedin.com/in/alex-youssef-02512a335/" target="_blank" rel="noopener noreferrer" className="nav-link" title="LinkedIn Profile">
           <Icons.Linkedin size={20} />
         </a>
       </div>
