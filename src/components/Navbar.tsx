@@ -1,7 +1,7 @@
-// Navbar.tsx
+// src/components/Navbar.tsx
 
 import * as Icons from 'lucide-react';
-import profilePicture from '../assets/profilepicture.png'; // Adjust the path as necessary
+import profilePicture from '../assets/profilepicture.png'; 
 
 interface NavbarProps {
   isMenuOpen: boolean;
@@ -13,6 +13,7 @@ export default function Navbar({ isMenuOpen, setIsMenuOpen }: NavbarProps) {
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
+    { label: 'Meeting Calendar', href: '#meeting-calendar' }, // New Link
     { label: 'Contact', href: '#contact' },
   ];
 
