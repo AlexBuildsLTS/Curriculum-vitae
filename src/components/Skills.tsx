@@ -1,6 +1,6 @@
 // Skills.tsx
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Skill {
   name: string;

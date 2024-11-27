@@ -1,6 +1,7 @@
 // src/pages/CalendarPage.tsx
 
 import React from 'react';
+
 import MeetingCalendar from '../components/MeetingCalendar';
 
 const CalendarPage: React.FC = () => {

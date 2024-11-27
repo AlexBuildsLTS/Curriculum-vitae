@@ -1,10 +1,11 @@
 // src/components/Navbar.tsx
 
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
-import * as Icons from "lucide-react";
-import profilePicture from "../assets/profilepicture.png";
+import * as Icons from 'lucide-react';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
+
+import profilePicture from '../assets/profilepicture.png';
 
 interface NavbarProps {
   isMenuOpen: boolean;

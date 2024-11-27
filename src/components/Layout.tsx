@@ -1,10 +1,11 @@
 // src/components/Layout.tsx
 
-import React, { useState } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import ThemeToggle from "./ThemeToggle";
-import * as Icons from "lucide-react";
+import * as Icons from 'lucide-react';
+import React, { useState } from 'react';
+
+import Footer from './Footer';
+import Navbar from './Navbar';
+import ThemeToggle from './ThemeToggle';
 
 interface LayoutProps {
   children: React.ReactNode;

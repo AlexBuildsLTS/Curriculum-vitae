@@ -13,7 +13,12 @@
     @apply font-sans bg-navy-primary text-slate;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply text-slate-lightest;
   }
 
@@ -22,7 +27,12 @@
     @apply bg-white text-navy-primary;
   }
 
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
     @apply text-navy-primary;
   }
 }

@@ -1,7 +1,7 @@
 // src/components/ThemeToggle.tsx
 
+import { Moon, Sun } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { Sun, Moon } from 'lucide-react';
 
 const ThemeToggle: React.FC = () => {
   const [isDark, setIsDark] = useState<boolean>(() => {
