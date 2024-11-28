@@ -21,12 +21,13 @@ The application follows a modular approach, with each component handling a speci
 - [x] React Calendar: A lightweight library for the interactive calendar.
 - [x] Tailwind CSS For styling and responsive design
 - [x] React-Router-dom For navigation within the application
+- [x] Tech Stack
+- [x] ReactJS: Frontend framework for building the user interface.
+- [x] React Calendar: A lightweight library for the interactive calendar.
+- [x] Tailwind CSS: For styling and responsive design.
+- [x] React Router: For navigation within the application.
 
-Tech Stack
-ReactJS: Frontend framework for building the user interface.
-React Calendar: A lightweight library for the interactive calendar.
-Tailwind CSS: For styling and responsive design.
-React Router: For navigation within the application.
+
 ### ProjectStructure
 ```bash
 src/
