@@ -1,11 +1,10 @@
 # `Meeting Calendar Applcation´
 
-This project is a ReactJS-based Meeting Calendar Application designed to:
-
-Display a calendar where users can view scheduled meetings.
-Allow users to manage meetings (add, edit, delete).
-Provide a responsive and user-friendly interface with theme toggling.
-The application follows a modular approach, with each component handling a specific functionality, ensuring reusability, scalability, and maintainability.
+- This project is a ReactJS-based Meeting Calendar Application designed to:
+-  Display a calendar where users can view scheduled meetings.
+-  Allow users to manage meetings (add, edit, delete).
+-  Provide a responsive and user-friendly interface with theme toggling.
+-  The application follows a modular approach, with each component handling a specific functionality, ensuring reusability, scalability, and maintainability.
 
 ## Features
 - [x] Responsive Design: Fully responsive interface for seamless use on desktop and mobile devices.
@@ -46,63 +45,63 @@ src/
 ```
 
 **Components and Their Roles**
-Pages
-<CalendarPage.tsx:> Entry point for the calendar feature. Imports and renders the
+- Pages
+- <CalendarPage.tsx:> Entry point for the calendar feature. Imports and renders the
 
-MeetingCalendar component.
-<Home.tsx:> Introductory page that showcases personalized content and links.
+- MeetingCalendar component.
+- <Home.tsx:> Introductory page that showcases personalized content and links.
 
-Core Components
-<MeetingCalendar.tsx:>
-Renders the calendar grid using react-calendar.
-Manages meeting states and integrates with the modal for editing.
-Highlights active days with scheduled meetings.
-Opens the modal for editing when a meeting is selected.
+- Core Components
+- <MeetingCalendar.tsx:>
+- Renders the calendar grid using react-calendar.
+- Manages meeting states and integrates with the modal for editing.
+- Highlights active days with scheduled meetings.
+- Opens the modal for editing when a meeting is selected.
 
-<EditMeetingModal.tsx:>
-Modal interface for adding or editing meeting details.
-Handles form inputs and validates data (e.g., title, date, time).
-Updates the state in <MeetingCalendar:> after saving changes.
-Reusable UI Components
-<ThemeToggle.tsx:>
-Provides <light/dark theme toggling:>
-Dynamically applies the .dark class to the root element based on user preference.
+- <EditMeetingModal.tsx:>
+- Modal interface for adding or editing meeting details.
+- Handles form inputs and validates data (e.g., title, date, time).
+- Updates the state in <MeetingCalendar:> after saving changes.
+- Reusable UI Components
+- <ThemeToggle.tsx:>
+- Provides <light/dark theme toggling:>
+- Dynamically applies the .dark class to the root element based on user preference.
 
-<Navbar.tsx:>
-Contains navigation links and integrates <ThemeToggle:>
-Fully responsive for desktop and mobile.
-<Footer.tsx:>
-Displays branding information, such as the creator's name and copyright.
-Shared Layout
-<Layout.tsx:>
-Wraps all pages to provide a consistent layout.
-Includes <Navbar:>, <Footer:>, and a container for page content.
-CSS and Styling
-The project uses a combination of:
+- <Navbar.tsx:>
+- Contains navigation links and integrates <ThemeToggle:>
+- Fully responsive for desktop and mobile.
+- <Footer.tsx:>
+- Displays branding information, such as the creator's name and copyright.
+- Shared Layout
+- <Layout.tsx:>
+- Wraps all pages to provide a consistent layout.
+- Includes <Navbar:>, <Footer:>, and a container for page content.
+- CSS and Styling
+- The project uses a combination of:
 
-<Tailwind.CSS:>
+- <Tailwind.CSS:>
 
-Utility-first framework for building responsive designs.
-Styles are defined in <global.css:> and <index.css:>
-Custom Styles:
+- Utility-first framework for building responsive designs.
+- Styles are defined in <global.css:> and <index.css:>
+- Custom Styles:
 
-<react-calendar.css:> overrides the default styles of the react-calendar library to match the application theme.
-Dynamic Features
-Meeting Data:
+- <react-calendar.css:> overrides the default styles of the react-calendar library to match the application theme.
+- Dynamic Features
+- Meeting Data:
 
-Meetings are dynamically rendered on the calendar grid from the meetings state.
-Edited meetings update the state, triggering a re-render.
-Form Validation:
+- Meetings are dynamically rendered on the calendar grid from the meetings state.
+- Edited meetings update the state, triggering a re-render.
+- Form Validation:
 
-Ensures only valid meetings are saved using manual or library-based validation.
-Theme Toggling:
+- Ensures only valid meetings are saved using manual or library-based validation.
+- Theme Toggling:
 
-Light and dark themes dynamically adjust the entire UI based on user preferences.
-Responsive Design:
+- Light and dark themes dynamically adjust the entire UI based on user preferences.
+- Responsive Design:
 
-All components adapt seamlessly to different screen sizes using Tailwind CSS.
+- All components adapt seamlessly to different screen sizes using Tailwind CSS.
 
-#### **How Components Work Together**
+- #### **How Components Work Together**
 
 ```
 CalendarPage.tsx: Parent for the calendar feature.
@@ -122,16 +121,16 @@ Install Dependencies:
 npm install
 ```
 
-Start the Development Server:
+- Start the Development Server:
 
 ```
 npm start
 ```
 
-Access the Application: Open <http://localhost:3000> in your browser.
+- Access the Application: Open <http://localhost:3000> in your browser.
 
-Conclusion
-This project demonstrates:
+- Conclusion
+- This project demonstrates:
 
 ````
 Modularizing components for reusability and scalability.
@@ -141,7 +140,7 @@ It serves as an excellent example of leveraging modern tools like React, Tailwin
 create an interactive, dynamic web application```
 
 ````
-Future Goals
+- Future Goals
 
 ### Integrate Backend Support
 * [ ] Use a backend service (e.g., Node.js, Express, or Django) for storing and managing meeting data persistently.
