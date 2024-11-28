@@ -1,0 +1,51 @@
+/* Import Tailwind Base Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply bg-navy-primary text-slate font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-lightest;
+  }
+}
+
+/* Custom Components */
+@layer components {
+  /* Navigation Links */
+  .nav-link {
+    @apply text-slate hover:text-green transition-colors duration-300;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    @apply px-4 py-2 border border-green text-green 
+           rounded bg-transparent hover:bg-green hover:bg-opacity-10 
+           transition-all duration-300;
+  }
+
+  /* Section Heading */
+  .section-heading {
+    @apply text-2xl md:text-3xl font-bold mb-8 text-slate-lightest 
+           flex items-center gap-4 after:content-[''] after:flex-1 
+           after:h-[1px] after:bg-navy-lightest;
+  }
+
+  /* Skill Bar for Projects/Skills */
+  .skill-bar {
+    @apply h-2 rounded-full bg-navy-lightest overflow-hidden;
+  }
+
+  .skill-progress {
+    @apply h-full bg-green transition-all duration-1000;
+  }
+
+  /* Vertical Text (e.g., Email) */
+  .vertical-text {
+    @apply [writing-mode:vertical-rl] tracking-widest;
+  }
+}

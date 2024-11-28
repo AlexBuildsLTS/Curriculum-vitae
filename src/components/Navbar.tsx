@@ -1,11 +1,9 @@
-// src/components/Navbar.tsx
-
-import * as Icons from 'lucide-react';
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
-
-import profilePicture from '../assets/profilepicture.png';
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import * as Icons from "lucide-react";
+import profilePicture from "../assets/profilepicture.png";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {
   isMenuOpen: boolean;
@@ -14,8 +12,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
   const navItems = [
+    { label: "Home", to: "/" },
     { label: "About", to: "about" },
-    { label: "Skills", to: "skills" },
+    { label: "Experience", to: "experience" },
     { label: "Projects", to: "projects" },
     { label: "Contact", to: "contact" },
   ];
@@ -23,31 +22,55 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
   return (
     <nav className="fixed top-0 z-50 w-full px-6 py-4 bg-navy-primary/90 backdrop-blur-sm lg:px-24">
       <div className="flex items-center justify-between">
-        {/* Profile Picture */}
-        <RouterLink to="/" className="flex items-center">
-          <img
-            src={profilePicture}
-            alt="Profile"
-            className="object-cover rounded-full w-14 h-14"
-          />
-        </RouterLink>
+        {/* Left Side: Navigation Links */}
+        <div className="flex items-center gap-8">
+          <RouterLink to="/" className="flex items-center">
+            <img
+              src={profilePicture}
+              alt="Profile"
+              className="object-cover rounded-full w-14 h-14"
+            />
+          </RouterLink>
+          {navItems.map((item, index) =>
+            item.to.startsWith("/") ? (
+              <RouterLink
+                key={item.label}
+                to={item.to}
+                className="nav-link"
+                style={{ animationDelay: `${index * 100}ms` }}>
+                {item.label}
+              </RouterLink>
+            ) : (
+              <ScrollLink
+                key={item.label}
+                to={item.to}
+                smooth={true}
+                duration={500}
+                className="cursor-pointer nav-link"
+                style={{ animationDelay: `${index * 100}ms` }}>
+                {item.label}
+              </ScrollLink>
+            )
+          )}
+        </div>
 
-        {/* Desktop Menu */}
-        <div className="items-center hidden gap-8 md:flex">
-          {navItems.map((item, index) => (
-            <ScrollLink
-              key={item.to}
-              to={item.to}
-              smooth={true}
-              duration={500}
-              className="cursor-pointer nav-link"
-              style={{ animationDelay: `${index * 100}ms` }}>
-              {item.label}
-            </ScrollLink>
-          ))}
-          {/* Link to Calendar Page */}
-          <RouterLink to="/calendar" className="btn-primary">
-            Calendar
+        {/* Right Side: Icons and Login */}
+        <div className="flex items-center gap-6">
+          {/* Calendar Icon */}
+          <RouterLink
+            to="/calendar"
+            className="p-2 text-green hover:text-slate-lightest">
+            <Icons.Calendar size={24} />
+          </RouterLink>
+
+          {/* ThemeToggle */}
+          <ThemeToggle />
+
+          {/* Login Button */}
+          <RouterLink
+            to="/login"
+            className="px-4 py-2 text-sm font-semibold border rounded text-green border-green hover:bg-green hover:text-navy-primary">
+            Log In
           </RouterLink>
         </div>
 
@@ -62,26 +85,39 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="absolute left-0 w-full py-4 md:hidden top-full bg-navy-light">
-          {navItems.map((item) => (
-            <ScrollLink
-              key={item.to}
-              to={item.to}
-              smooth={true}
-              duration={500}
-              className="block px-6 py-2 cursor-pointer nav-link"
-              onClick={() => setIsMenuOpen(false)}>
-              {item.label}
-            </ScrollLink>
-          ))}
-          {/* Link to Calendar Page */}
-          <div className="px-6 pt-4">
-            <RouterLink
-              to="/calendar"
-              className="inline-block btn-primary"
-              onClick={() => setIsMenuOpen(false)}>
-              Calendar
-            </RouterLink>
-          </div>
+          <RouterLink
+            to="/"
+            className="block px-6 py-2 nav-link"
+            onClick={() => setIsMenuOpen(false)}>
+            Home
+          </RouterLink>
+          {navItems.map((item) =>
+            item.to.startsWith("/") ? (
+              <RouterLink
+                key={item.label}
+                to={item.to}
+                className="block px-6 py-2 nav-link"
+                onClick={() => setIsMenuOpen(false)}>
+                {item.label}
+              </RouterLink>
+            ) : (
+              <ScrollLink
+                key={item.label}
+                to={item.to}
+                smooth={true}
+                duration={500}
+                className="block px-6 py-2 cursor-pointer nav-link"
+                onClick={() => setIsMenuOpen(false)}>
+                {item.label}
+              </ScrollLink>
+            )
+          )}
+          <RouterLink
+            to="/calendar"
+            className="block px-6 py-2 nav-link"
+            onClick={() => setIsMenuOpen(false)}>
+            Calendar
+          </RouterLink>
         </div>
       )}
     </nav>

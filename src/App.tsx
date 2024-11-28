@@ -1,60 +1,20 @@
-import * as Icons from 'lucide-react';
-import { useState } from 'react';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import CalendarPage from "./pages/CalendarPage";
 
-import About from './components/About';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import MeetingCalendar from './components/MeetingCalendar';
-import Navbar from './components/Navbar';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-
-function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+const App: React.FC = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-
-      <main className="px-6 pt-20 lg:px-24">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <MeetingCalendar />
-        <Contact />
-      </main>
-      <Footer />
-      {/* Social Links */}
-      <div className="fixed left-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
-        <a
-          href="https://github.com/AlexBuildsLTS"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nav-link"
-          title="GitHub Profile">
-          <Icons.Github size={20} />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/alex-youssef-02512a335/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nav-link"
-          title="LinkedIn Profile">
-          <Icons.Linkedin size={20} />
-        </a>
-      </div>
-      {/* Email */}
-      <div className="fixed right-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
-        <a
-          href="mailto:alex.youssef@live.com"
-          className="nav-link vertical-text">
-          alex.youssef@live.com
-        </a>
-      </div>
-    </div>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
-}
+};
 
 export default App;

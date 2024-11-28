@@ -1,10 +1,8 @@
 // src/components/MeetingCalendar.tsx
 
-import 'react-calendar/dist/Calendar.css';
-
-import React, { useEffect, useState } from 'react';
-
-import EditMeetingModal from './EditMeetingModal';
+import "react-calendar/dist/Calendar.css";
+import React, { useState, useEffect } from "react";
+import EditMeetingModal from "./EditMeetingModal";
 
 interface Meeting {
   id: number;

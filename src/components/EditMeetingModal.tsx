@@ -1,6 +1,6 @@
 // src/components/EditMeetingModal.tsx
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface Meeting {
   id: number;
