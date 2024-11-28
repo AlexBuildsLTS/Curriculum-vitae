@@ -8,20 +8,19 @@ Provide a responsive and user-friendly interface with theme toggling.
 The application follows a modular approach, with each component handling a specific functionality, ensuring reusability, scalability, and maintainability.
 
 ## Features
-
+- [x] Responsive Design: Fully responsive interface for seamless use on desktop and mobile devices.
+- [x] Light/Dark Theme: Toggle between light and dark modes for a personalized user experience.
 - [x] Interactive Calendar: View scheduled meetings in a user-friendly calendar interface.
 - [x] Meeting Management:
 - [x] Add new meetings with required details.
 - [x] Edit or delete existing meetings.
 - [x] Form validation ensures valid meeting data.
-- [x] Responsive Design: Fully responsive interface for seamless use on desktop and mobile devices.
-- [x] Light/Dark Theme: Toggle between light and dark modes for a personalized user experience.
 - [x] Reusable Components: Modular components like MeetingCalendar, EditMeetingModal, and ThemeToggle for scalability and clean code.
 - [x] Tech Stack
 - [x] ReactJS: Frontend framework for building the user interface.
 - [x] React Calendar: A lightweight library for the interactive calendar.
 - [x] Tailwind CSS For styling and responsive design
-- [x] React Router For navigation within the application
+- [x] React-Router-dom For navigation within the application
 
 Tech Stack
 ReactJS: Frontend framework for building the user interface.
