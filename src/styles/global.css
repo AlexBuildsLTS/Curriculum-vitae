@@ -1,12 +1,11 @@
-/* src/styles/global.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Base Styles */
-@layer base {
+ @layer base {
   html {
     scroll-behavior: smooth;
+  }
   }
 
   body {
@@ -22,9 +21,12 @@
     @apply text-slate-lightest;
   }
 
-  /* Dark Mode Styles */
+  a {
+    @apply text-green;
+  }
   .dark body {
-    @apply bg-white text-navy-primary;
+    background-color: #ffffff;
+    color: #1e3a8a;  
   }
 
   .dark h1,
@@ -33,13 +35,16 @@
   .dark h4,
   .dark h5,
   .dark h6 {
-    @apply text-navy-primary;
+    color: #1e3a8a; 
   }
-}
+  
 
-/* Custom Components */
+
+
 @layer components {
-  /* Transparent Scrollbar */
+  .container {
+    @apply px-4 mx-auto md:px-8 lg:px-16 xl:px-20;
+  }
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -57,34 +62,33 @@
     background: transparent;
   }
 
-  /* Adjust Root Font Size for Scale */
+
   html {
-    font-size: 14px; /* Slightly smaller than the default 16px */
+    font-size: 14px;
   }
 
   body {
-    transform: scale(0.98); /* Slightly shrink the body */
-    transform-origin: top center; /* Ensure scaling starts from the top */
+    transform: scale(0.98); 
+    transform-origin: top center; 
   }
 
-  /* Navigation Links */
+
   .nav-link {
     @apply transition-colors duration-300 text-slate hover:text-green;
   }
 
-  /* Primary Button */
+  
   .btn-primary {
     @apply px-4 py-2 transition-all duration-300 bg-transparent border rounded border-green text-green hover:bg-green hover:bg-opacity-10;
   }
 
-  /* Section Heading */
+
   .section-heading {
     @apply text-2xl md:text-3xl font-bold mb-8 text-slate-lightest 
            flex items-center gap-4 after:content-[''] after:flex-1 
            after:h-[1px] after:bg-navy-lightest;
   }
 
-  /* Skill Bar for Projects/Skills */
   .skill-bar {
     @apply h-2 overflow-hidden rounded-full bg-navy-lightest;
   }
@@ -93,8 +97,19 @@
     @apply h-full transition-all duration-1000;
   }
 
-  /* Vertical Text (e.g., Email) */
+ .skill-bar {
+    @apply h-2 overflow-hidden rounded-full bg-navy-lightest;
+  }
+  
+  
+  
   .vertical-text {
     @apply [writing-mode:vertical-rl] tracking-widest;
   }
+
+
+  .btn-secondary {
+    @apply px-4 py-2 transition-all duration-300 bg-transparent border rounded border-green text-green hover:bg-green hover:bg-opacity-10;
+  }
+
 }
