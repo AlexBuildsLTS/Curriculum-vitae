@@ -39,6 +39,34 @@
 
 /* Custom Components */
 @layer components {
+  /* Transparent Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Adjust Root Font Size for Scale */
+  html {
+    font-size: 14px; /* Slightly smaller than the default 16px */
+  }
+
+  body {
+    transform: scale(0.98); /* Slightly shrink the body */
+    transform-origin: top center; /* Ensure scaling starts from the top */
+  }
+
   /* Navigation Links */
   .nav-link {
     @apply transition-colors duration-300 text-slate hover:text-green;

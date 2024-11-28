@@ -1,35 +1,27 @@
-// src/components/ThemeToggle.tsx
-
-import { Moon, Sun } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 const ThemeToggle: React.FC = () => {
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      return storedTheme === 'dark';
-    }
-    // Default to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.classList.remove("dark");
     }
-  }, [isDark]);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
   return (
     <button
-      onClick={() => setIsDark(!isDark)}
-      className="flex items-center justify-center w-10 h-10 transition-colors duration-300 rounded-full bg-slate-200 dark:bg-navy-lightest"
-      aria-label="Toggle Dark Mode"
-    >
-      {isDark ? <Sun size={20} className="text-yellow-500" /> : <Moon size={20} className="text-gray-800" />}
+      onClick={toggleTheme}
+      className="px-3 py-2 text-sm font-semibold border rounded text-slate-lightest border-green hover:bg-green hover:text-navy-primary"
+      aria-label="Toggle Theme">
+      {theme === "light" ? "🌞" : "🌜"}
     </button>
   );
 };
