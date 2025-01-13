@@ -10,18 +10,28 @@ const bcrypt = require('bcrypt');
 const mysql = require('mysql2/promise');
 
 const app = express();
-app.use(cors());
+
+// Configure CORS to allow requests from your Netlify frontend
+app.use(
+    cors({
+        origin: 'https://alexvite.netlify.app', // Your Netlify frontend URL
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true,
+    })
+);
+
+// Middleware to parse JSON
 app.use(express.json());
 
-// 1) ENV variables or fallback defaults
+// ENV variables or fallback defaults
 const JWT_SECRET = process.env.JWT_SECRET || 'SUPER_SECRET';
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_USER = process.env.DB_USER || 'root';
-const DB_PASS = process.env.DB_PASS || '';
+const DB_PASS = process.env.DB_PASS || 'root';
 const DB_NAME = process.env.DB_NAME || 'meetingsdb';
 const DB_PORT = process.env.DB_PORT || 3306;
 
-// 2) Create a connection pool
+// Create a connection pool
 let pool;
 async function initDB() {
     try {
@@ -43,7 +53,7 @@ async function initDB() {
 }
 initDB();
 
-// 3) Helper to create JWT
+// Helper to create JWT
 function createToken(user) {
     return jwt.sign(
         {
@@ -55,7 +65,7 @@ function createToken(user) {
     );
 }
 
-// 4) Middlewares
+// Middlewares
 function authMiddleware(req, res, next) {
     const header = req.header('Authorization');
     if (!header) {
@@ -79,6 +89,7 @@ function adminOnly(req, res, next) {
     }
 }
 
+// Routes
 // A) Create an admin user
 app.post('/api/create-admin', async (req, res) => {
     try {
@@ -138,8 +149,8 @@ app.post('/api/meetings', authMiddleware, async (req, res) => {
         const participantsString = participants.join(',');
         const [result] = await pool.query(
             `INSERT INTO meetings
-           (title, date, time, level, participants, description, creator_id)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                 (title, date, time, level, participants, description, creator_id)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [title, date, time, level, participantsString, description, req.user.userId]
         );
         const newId = result.insertId;
