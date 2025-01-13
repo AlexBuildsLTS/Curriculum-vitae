@@ -1,4 +1,3 @@
-// About.tsx
 
 import * as Icons from 'lucide-react';
 

@@ -1,151 +1,207 @@
-// Projects.tsx
-
-import * as Icons from 'lucide-react';
-
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  technologies: string[];
-  githubUrl: string;
-  liveUrl?: string;
-  progress: number;
-}
+/* src/components/Projects.tsx */
+import { useTheme } from '../contexts/ThemeContext'; // Adjust path as needed
 
 export default function Projects() {
-  const projects: Project[] = [
-    {
-      title: 'Growth Analytics',
-      description:
-        'Frontend developed for a growth analytics tool, integrating data visualization features for business metrics.',
-      image: 'https://www.mercy.edu/sites/default/files/2020-07/iStock-1150199386.jpg',
-      technologies: ['React', 'TypeScript', 'Chart.js', 'Vite', 'Tailwind CSS'],
-      githubUrl: 'https://github.com/AlexBuildsLTS/Growth-Analytics-demo',
-      liveUrl: 'https://growthdemo.netlify.app/',
-      progress: 78,
-    },
-    
-    {
-      title: 'Marketplace App',
-      description:
-        'A comprehensive marketplace application with robust backend and intuitive frontend, focusing on user experience and scalability.',
-      image:
-        'https://images.unsplash.com/photo-1549298916-f52d724204b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-      technologies: ['Java', 'Spring Boot', 'React', 'SQL'],
-      githubUrl: 'https://github.com/AlexBuildsLTS/marketplace-app',
-      progress: 50,
-    },
-    {
-      title: 'Online Bookstore',
-      description:
-        'Developed a full-stack e-commerce web application for an online bookstore. Implemented user authentication, product catalog, shopping cart, and order processing features.',
-      image:
-        'https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-      technologies: ['Java', 'Spring Boot', 'React', 'MySQL'],
-      githubUrl: 'https://github.com/AlexBuildsLTS/online-bookstore',
-      progress: 80,
-    },
-    {
-      title: 'Connectify',
-      description:
-        'Created a social networking platform that allows users to create profiles, connect with friends, and share updates. The project focuses on scalability and real-time communication using WebSockets.',
-      image:
-        'https://images.unsplash.com/photo-1519241047957-be31d7379a5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-      technologies: ['Java', 'Spring Boot', 'React', 'WebSocket', 'MongoDB'],
-      githubUrl: 'https://github.com/AlexBuildsLTS/connectify',
-      progress: 70,
-    },
-  ];
-
-  // Function to calculate the color based on the progress percentage
-  const getProgressColor = (progress: number) => {
-    // Map progress (0-100) to hue (0-120), where 0 is red and 120 is green
-    const hue = (progress * 120) / 100;
-    return `hsl(${hue}, 100%, 50%)`;
-  };
+  const { darkMode } = useTheme();
+  const cardClasses = darkMode ? 'bg-[#112240]' : 'bg-white';
 
   return (
-    <section id="projects" className="py-24">
-      <h2 className="section-heading">Featured Projects</h2>
-      <div className="space-y-24">
-        {projects.map((project, index) => (
-          <div
-            key={project.title}
-            className={`flex flex-col ${
-              index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-            } gap-8 items-center`}
-          >
-            {/* Project Image */}
-            <div className="relative flex-1">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="object-cover w-full h-64 rounded-lg"
-              />
-            </div>
-            {/* Project Details */}
-            <div className="flex-1 space-y-4">
-              {/* Project Title and Icons */}
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-bold text-slate-lightest">
-                  {project.title}
-                </h3>
+      <section id="projects" className="py-16 px-6">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold mb-8">Featured Projects</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            {/* AI Assistant (with NEW image) */}
+            <div className={`rounded-lg overflow-hidden shadow-lg ${cardClasses}`}>
+              <div className="h-48 overflow-hidden">
+                <img
+                    src="https://images.unsplash.com/photo-1542831371-d531d36971e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="AI Assistant"
+                    className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">AI Assistant</h3>
+                <p className="mb-4">
+                  An intelligent chatbot powered by advanced AI technology
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {['React', 'TypeScript', 'AI', 'Node.js'].map((tag) => (
+                      <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full text-sm bg-teal-500/10 text-teal-400"
+                      >
+                    {tag}
+                  </span>
+                  ))}
+                </div>
+
                 <div className="flex gap-4">
                   <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="View GitHub Repository"
-                    className="text-green hover:text-slate-lightest"
-                  >
-                    <Icons.Github size={24} />
-                  </a>
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
+                      href="https://alexaiassistant.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="View Live Demo"
-                      className="text-green hover:text-slate-lightest"
-                    >
-                      <Icons.ExternalLink size={24} />
-                    </a>
-                  )}
-                </div>
-              </div>
-              {/* Project Description */}
-              <p className="text-slate">{project.description}</p>
-              {/* Technologies */}
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 text-sm border rounded text-green border-green"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
                   >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              {/* Progress Bar */}
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-slate-light">Progress</span>
-                  <span className="text-green">{project.progress}%</span>
-                </div>
-                <div className="skill-bar">
-                  <div
-                    className="skill-progress"
-                    style={{
-                      width: `${project.progress}%`,
-                      backgroundColor: getProgressColor(project.progress),
-                    }}
-                  />
+                    Live Demo
+                  </a>
+                  <a
+                      href="https://github.com/AlexBuildsLTS/AiBotAssistent"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    GitHub
+                  </a>
                 </div>
               </div>
             </div>
+
+            {/* Growth Analytics */}
+            <div className={`rounded-lg overflow-hidden shadow-lg ${cardClasses}`}>
+              <div className="h-48 overflow-hidden">
+                <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71"
+                    alt="Growth Analytics"
+                    className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">Growth Analytics</h3>
+                <p className="mb-4">
+                  Data visualization and analytics platform
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {['React', 'D3.js', 'Analytics', 'TypeScript'].map((tag) => (
+                      <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full text-sm bg-teal-500/10 text-teal-400"
+                      >
+                    {tag}
+                  </span>
+                  ))}
+                </div>
+
+                <div className="flex gap-4">
+                  <a
+                      href="https://growthdemo.netlify.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    Live Demo
+                  </a>
+                  <a
+                      href="https://github.com/AlexBuildsLTS/Growth-Analytics-demo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* NorthMarket */}
+            <div className={`rounded-lg overflow-hidden shadow-lg ${cardClasses}`}>
+              <div className="h-48 overflow-hidden">
+                <img
+                    src="https://images.unsplash.com/photo-1472851294608-062f824d29cc"
+                    alt="NorthMarket"
+                    className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">NorthMarket</h3>
+                <p className="mb-4">
+                  Modern e-commerce marketplace platform
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {['React', 'Node.js', 'E-commerce', 'TypeScript'].map((tag) => (
+                      <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full text-sm bg-teal-500/10 text-teal-400"
+                      >
+                    {tag}
+                  </span>
+                  ))}
+                </div>
+
+                <div className="flex gap-4">
+                  <a
+                      href="https://northmarkup.netlify.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    Live Demo
+                  </a>
+                  <a
+                      href="https://github.com/AlexBuildsLTS/NorthMarket-Frontend"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* FastFood */}
+            <div className={`rounded-lg overflow-hidden shadow-lg ${cardClasses}`}>
+              <div className="h-48 overflow-hidden">
+                <img
+                    src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5"
+                    alt="FastFood"
+                    className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">FastFood</h3>
+                <p className="mb-4">
+                  Restaurant ordering and delivery platform
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {['React', 'Node.js', 'Food Delivery', 'TypeScript'].map((tag) => (
+                      <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full text-sm bg-teal-500/10 text-teal-400"
+                      >
+                    {tag}
+                  </span>
+                  ))}
+                </div>
+
+                <div className="flex gap-4">
+                  <a
+                      href="https://guileless-mousse-13cecc.netlify.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    Live Demo
+                  </a>
+                  <a
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+      </section>
   );
 }

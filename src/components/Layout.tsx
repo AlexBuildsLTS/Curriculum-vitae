@@ -1,62 +1,32 @@
 // src/components/Layout.tsx
-
-import * as Icons from 'lucide-react';
 import React, { useState } from 'react';
-
-import Footer from './Footer';
 import Navbar from './Navbar';
+import Footer from './Footer';
 import ThemeToggle from './ThemeToggle';
 
 interface LayoutProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (
-    <div className="min-h-screen">
-      <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+    return (
+        <div className="min-h-screen">
+            <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
-      {/* Theme Toggle Button */}
-      <div className="fixed top-16 right-6">
-        <ThemeToggle />
-      </div>
+            {/* Optional floating toggle */}
+            <div className="fixed top-16 right-6 z-50">
+                <ThemeToggle />
+            </div>
 
-      <main className="px-6 pt-20 lg:px-24">{children}</main>
+            <main className="px-6 pt-20 lg:px-24">{children}</main>
+            <Footer />
 
-      <Footer />
-
-      {/* Social Links */}
-      <div className="fixed left-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
-        <a
-          href="https://github.com/AlexBuildsLTS"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nav-link"
-          title="GitHub Profile">
-          <Icons.Github size={20} />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/alex-youssef-02512a335/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nav-link"
-          title="LinkedIn Profile">
-          <Icons.Linkedin size={20} />
-        </a>
-      </div>
-
-      {/* Email */}
-      <div className="fixed right-6 bottom-0 hidden lg:flex flex-col items-center gap-6 after:content-[''] after:w-[1px] after:h-32 after:bg-slate">
-        <a
-          href="mailto:alex.youssef@live.com"
-          className="nav-link vertical-text">
-          alex.youssef@live.com
-        </a>
-      </div>
-    </div>
-  );
+            {/* Social links, email, etc. */}
+            {/* ... */}
+        </div>
+    );
 };
 
 export default Layout;

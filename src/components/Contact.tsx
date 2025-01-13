@@ -2,7 +2,7 @@ import * as Icons from 'lucide-react';
 import React, { useState } from 'react';
 
 export default function Contact() {
-  // State for form data and submission status
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -12,12 +12,12 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
 
-  // Handle input changes
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // Handle form submission
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
