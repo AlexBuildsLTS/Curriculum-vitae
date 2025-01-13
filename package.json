@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
     "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -23,9 +22,8 @@
     "@types/react-scroll": "^1.8.10",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.18.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.14",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "globals": "^15.12.0",
     "lucide-react": "^0.358.0",
     "postcss": "^8.4.49",
@@ -35,5 +33,9 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^7.18.0",
     "vite": "^5.4.11"
+  },
+  "overrides": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }
