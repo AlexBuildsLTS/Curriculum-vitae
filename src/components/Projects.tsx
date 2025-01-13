@@ -1,5 +1,7 @@
 /* src/components/Projects.tsx */
-import { useTheme } from '../contexts/ThemeContext'; // Adjust path as needed
+import { useTheme } from '../contexts/ThemeContext';
+import {Github, ExternalLink, GithubIcon} from 'lucide-react';
+
 
 export default function Projects() {
   const { darkMode } = useTheme();
@@ -11,8 +13,7 @@ export default function Projects() {
           <h2 className="text-3xl font-bold mb-8">Featured Projects</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-            {/* AI Assistant (with NEW image) */}
+            {/* AI Assistant */}
             <div className={`rounded-lg overflow-hidden shadow-lg ${cardClasses}`}>
               <div className="h-48 overflow-hidden">
                 <img
@@ -38,22 +39,29 @@ export default function Projects() {
                   ))}
                 </div>
 
+                {/* Icon Links for Live Demo & GitHub */}
                 <div className="flex gap-4">
+                  {/* Live Demo Icon */}
                   <a
                       href="https://alexaiassistant.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="AI Assistant Live Demo"
                   >
-                    Live Demo
+                    <ExternalLink size={20} />
+                    <span>Live Demo</span>
                   </a>
+                  {/* GitHub Icon */}
                   <a
                       href="https://github.com/AlexBuildsLTS/AiBotAssistent"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="AI Assistant GitHub"
                   >
-                    GitHub
+                    <GithubIcon size={20} />
+                    <span>GitHub</span>
                   </a>
                 </div>
               </div>
@@ -90,17 +98,21 @@ export default function Projects() {
                       href="https://growthdemo.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="Growth Analytics Live Demo"
                   >
-                    Live Demo
+                    <ExternalLink size={20} />
+                    <span>Live Demo</span>
                   </a>
                   <a
                       href="https://github.com/AlexBuildsLTS/Growth-Analytics-demo"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="Growth Analytics GitHub"
                   >
-                    GitHub
+                    <Github size={20} />
+                    <span>GitHub</span>
                   </a>
                 </div>
               </div>
@@ -137,17 +149,21 @@ export default function Projects() {
                       href="https://northmarkup.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="NorthMarket Live Demo"
                   >
-                    Live Demo
+                    <ExternalLink size={20} />
+                    <span>Live Demo</span>
                   </a>
                   <a
                       href="https://github.com/AlexBuildsLTS/NorthMarket-Frontend"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="NorthMarket GitHub"
                   >
-                    GitHub
+                    <Github size={20} />
+                    <span>GitHub</span>
                   </a>
                 </div>
               </div>
@@ -184,17 +200,21 @@ export default function Projects() {
                       href="https://guileless-mousse-13cecc.netlify.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="FastFood Live Demo"
                   >
-                    Live Demo
+                    <ExternalLink size={20} />
+                    <span>Live Demo</span>
                   </a>
                   <a
-                      href="#"
+                      href="https://github.com/AlexBuildsLTS/FastFoodWS-g51"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-teal-400 hover:text-teal-300 transition-colors"
+                      className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
+                      aria-label="FastFood GitHub"
                   >
-                    GitHub
+                    <Github size={20} />
+                    <span>GitHub</span>
                   </a>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 /****************************************************
- * index.js (Node/Express server with MariaDB + JWT)
+ * index.js (Node/Express + MariaDB + JWT)
  ****************************************************/
 const express = require('express');
 const cors = require('cors');
@@ -17,30 +17,31 @@ const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASS = process.env.DB_PASS || '';
 const DB_NAME = process.env.DB_NAME || 'meetingsdb';
-const DB_PORT = process.env.DB_PORT || 3306; // If needed
-
-let pool;
+const DB_PORT = process.env.DB_PORT || 3306;
 
 // 2) Create a connection pool
+let pool;
 async function initDB() {
-    pool = await mysql.createPool({
-        host: DB_HOST,
-        user: DB_USER,
-        password: DB_PASS,
-        database: DB_NAME,
-        port: DB_PORT,
-        waitForConnections: true,
-        connectionLimit: 5,
-        queueLimit: 0,
-    });
-    console.log('Connected to MariaDB pool');
+    try {
+        pool = await mysql.createPool({
+            host: DB_HOST,
+            user: DB_USER,
+            password: DB_PASS,
+            database: DB_NAME,
+            port: DB_PORT,
+            waitForConnections: true,
+            connectionLimit: 5,
+            queueLimit: 0,
+        });
+        console.log('Connected to MariaDB pool');
+    } catch (err) {
+        console.error('Failed to connect to DB:', err);
+        process.exit(1);
+    }
 }
-initDB().catch((err) => {
-    console.error('Failed to connect to DB:', err);
-    process.exit(1);
-});
+initDB();
 
-// 3) Helper: create a JWT
+// 3) Helper to create JWT
 function createToken(user) {
     return jwt.sign(
         {
@@ -80,7 +81,7 @@ function adminOnly(req, res, next) {
  * ROUTES
  ****************************************************/
 
-
+// A) Create an admin user
 app.post('/api/create-admin', async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -96,7 +97,7 @@ app.post('/api/create-admin', async (req, res) => {
     }
 });
 
-
+// B) Login route
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -117,25 +118,23 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// C) GET /api/meetings (public - no auth needed)
+// C) GET /api/meetings (public)
 app.get('/api/meetings', async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT * FROM meetings ORDER BY date, time');
-        // If participants is stored comma-separated, you can parse here if you want
-        // but we'll just return as is for now
-        res.json(
-            rows.map((m) => ({
-                ...m,
-                participants: m.participants ? m.participants.split(',') : [],
-            }))
-        );
+        const mapped = rows.map((m) => ({
+            ...m,
+            // participants stored as comma-separated in DB
+            participants: m.participants ? m.participants.split(',') : [],
+        }));
+        res.json(mapped);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Cannot fetch meetings' });
     }
 });
 
-// D) POST /api/meetings (needs auth)
+// D) POST /api/meetings (auth required)
 app.post('/api/meetings', authMiddleware, async (req, res) => {
     const { title, date, time, level, participants, description } = req.body;
     try {
@@ -147,7 +146,7 @@ app.post('/api/meetings', authMiddleware, async (req, res) => {
             [title, date, time, level, participantsString, description, req.user.userId]
         );
         const newId = result.insertId;
-        // fetch inserted row
+        // fetch the newly inserted row
         const [rows] = await pool.query('SELECT * FROM meetings WHERE id=?', [newId]);
         const row = rows[0];
         row.participants = row.participants ? row.participants.split(',') : [];
@@ -162,7 +161,7 @@ app.post('/api/meetings', authMiddleware, async (req, res) => {
 app.delete('/api/meetings/:id', authMiddleware, adminOnly, async (req, res) => {
     const meetingId = parseInt(req.params.id, 10);
     try {
-        const [result] = await pool.query(`DELETE FROM meetings WHERE id=?`, [meetingId]);
+        const [result] = await pool.query('DELETE FROM meetings WHERE id=?', [meetingId]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Meeting not found' });
         }
@@ -173,10 +172,10 @@ app.delete('/api/meetings/:id', authMiddleware, adminOnly, async (req, res) => {
     }
 });
 
-// (Optional) GET /api/users (admin only)
+// Optional: GET /api/users (admin only)
 app.get('/api/users', authMiddleware, adminOnly, async (req, res) => {
     try {
-        const [rows] = await pool.query(`SELECT id, username, role FROM users`);
+        const [rows] = await pool.query('SELECT id, username, role FROM users');
         res.json(rows);
     } catch (err) {
         console.error(err);
