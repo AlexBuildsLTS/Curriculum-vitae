@@ -1,10 +1,18 @@
 /* src/components/Projects.tsx */
-import { useTheme } from '../contexts/ThemeContext';
+import {useTheme} from '../contexts/ThemeContext';
 import {Github, ExternalLink, GithubIcon} from 'lucide-react';
 
+<div className="project-card p-4">
+  <h3 className="text-xl font-bold mb-2">Project Title</h3>
+  <p className="text-slate-light">Description of the project.</p>
+  <div className="flex items-center gap-2 mt-4">
+    <a href="#" className="btn-primary">Live Demo</a>
+    <a href="#" className="btn-primary">GitHub</a>
+  </div>
+</div>
 
 export default function Projects() {
-  const { darkMode } = useTheme();
+  const {darkMode} = useTheme();
   const cardClasses = darkMode ? 'bg-[#112240]' : 'bg-white';
 
   return (
@@ -49,7 +57,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="AI Assistant Live Demo"
                   >
-                    <ExternalLink size={20} />
+                    <ExternalLink size={20}/>
                     <span>Live Demo</span>
                   </a>
                   {/* GitHub Icon */}
@@ -60,7 +68,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="AI Assistant GitHub"
                   >
-                    <GithubIcon size={20} />
+                    <GithubIcon size={20}/>
                     <span>GitHub</span>
                   </a>
                 </div>
@@ -101,7 +109,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="Growth Analytics Live Demo"
                   >
-                    <ExternalLink size={20} />
+                    <ExternalLink size={20}/>
                     <span>Live Demo</span>
                   </a>
                   <a
@@ -111,7 +119,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="Growth Analytics GitHub"
                   >
-                    <Github size={20} />
+                    <Github size={20}/>
                     <span>GitHub</span>
                   </a>
                 </div>
@@ -152,7 +160,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="NorthMarket Live Demo"
                   >
-                    <ExternalLink size={20} />
+                    <ExternalLink size={20}/>
                     <span>Live Demo</span>
                   </a>
                   <a
@@ -162,7 +170,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="NorthMarket GitHub"
                   >
-                    <Github size={20} />
+                    <Github size={20}/>
                     <span>GitHub</span>
                   </a>
                 </div>
@@ -203,7 +211,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="FastFood Live Demo"
                   >
-                    <ExternalLink size={20} />
+                    <ExternalLink size={20}/>
                     <span>Live Demo</span>
                   </a>
                   <a
@@ -213,7 +221,7 @@ export default function Projects() {
                       className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1"
                       aria-label="FastFood GitHub"
                   >
-                    <Github size={20} />
+                    <Github size={20}/>
                     <span>GitHub</span>
                   </a>
                 </div>

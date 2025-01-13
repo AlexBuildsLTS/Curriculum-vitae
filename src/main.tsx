@@ -4,13 +4,14 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
-import './index.css'; // Import your Tailwind + custom CSS
+import './index.css';
+import './styles/global.css';
+import 'react-calendar/dist/Calendar.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        {/* Wrap entire app in ThemeProvider */}
+
         <ThemeProvider>
-            {/* Single router for the whole app */}
             <Router>
                 <App />
             </Router>

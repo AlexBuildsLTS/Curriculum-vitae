@@ -1,178 +1,230 @@
-import "react-calendar/dist/Calendar.css";
 import React, { useState, useEffect } from "react";
-
-// Define the Meeting interface
-interface Meeting {
-  id: number;
-  title: string;
-  date: string;
-  time: string;
-  level: string;
-  participants: string[];
-  description: string;
-}
-
-const BASE_URL = "http://localhost:4000"; // Update this as needed
+import EditMeetingModal from "./EditMeetingModal";
+import { Meeting } from "../types/Meeting";
 
 const MeetingCalendar: React.FC = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [level, setLevel] = useState("Team");
-  const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [time, setTime] = useState<string>("");
+  const [level, setLevel] = useState<string>("Team");
+  const [participants, setParticipants] = useState<string[]>([""]);
+  const [description, setDescription] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [currentMeeting, setCurrentMeeting] = useState<Meeting | null>(null);
 
+  // Load meetings from localStorage on component mount
   useEffect(() => {
-    fetchMeetings();
+    const storedMeetings = localStorage.getItem("meetings");
+    if (storedMeetings) {
+      setMeetings(JSON.parse(storedMeetings));
+    }
   }, []);
 
-  async function fetchMeetings() {
-    try {
-      const res = await fetch(`${BASE_URL}/api/meetings`);
-      if (!res.ok) throw new Error("Failed to fetch meetings");
-      const data: Meeting[] = await res.json();
-      setMeetings(data);
-    } catch (err) {
-      console.error("Fetch Meetings Error:", err);
-      setError("Failed to load meetings");
-    }
-  }
+  // Save meetings to localStorage whenever meetings state changes
+  useEffect(() => {
+    localStorage.setItem("meetings", JSON.stringify(meetings));
+  }, [meetings]);
 
-  async function addMeeting(e: React.FormEvent) {
+  const validateEmails = (emails: string[]): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emails.every((email) => emailRegex.test(email));
+  };
+
+  const addMeeting = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
 
-    if (!title.trim() || !date.trim() || !time.trim() || !description.trim()) {
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (!loggedInUserEmail) {
+      setError("You must be logged in to create a meeting.");
+      return;
+    }
+
+    // Trim inputs
+    const trimmedTitle = title.trim();
+    const trimmedDate = date.trim();
+    const trimmedTime = time.trim();
+    const trimmedLevel = level.trim();
+    const trimmedParticipants = participants.map((email) => email.trim());
+    const trimmedDescription = description.trim();
+
+    // Validation
+    if (!trimmedTitle || !trimmedDate || !trimmedTime || !trimmedLevel || !trimmedDescription) {
       setError("Please fill in all required fields.");
       return;
     }
 
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please provide a valid email.");
+    if (trimmedParticipants.length === 0 || trimmedParticipants.some((email) => email === "")) {
+      setError("Please provide at least one participant email.");
       return;
     }
 
-    const newMeeting = {
-      title,
-      date,
-      time,
-      level,
-      participants: [email],
-      description,
+    if (!validateEmails(trimmedParticipants)) {
+      setError("Please enter valid email addresses.");
+      return;
+    }
+
+    if (meetings.some((meeting) => meeting.date === trimmedDate && meeting.time === trimmedTime)) {
+      setError("A meeting is already scheduled at this date and time.");
+      return;
+    }
+
+    const newMeeting: Meeting = {
+      id: Date.now(),
+      title: trimmedTitle,
+      date: trimmedDate,
+      time: trimmedTime,
+      level: trimmedLevel,
+      participants: trimmedParticipants,
+      description: trimmedDescription,
+      creatorEmail: loggedInUserEmail,
     };
 
-    try {
-      const res = await fetch(`${BASE_URL}/api/meetings`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newMeeting),
-      });
+    setMeetings([...meetings, newMeeting]);
+    setTitle("");
+    setDate("");
+    setTime("");
+    setLevel("Team");
+    setParticipants([""]);
+    setDescription("");
+    setError("");
+  };
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Failed to create meeting");
-      }
+  const deleteMeeting = (idToDelete: number) => {
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    const meetingToDelete = meetings.find((meeting) => meeting.id === idToDelete);
 
-      const created = await res.json();
-      setMeetings([...meetings, created]);
-      setTitle("");
-      setDate("");
-      setTime("");
-      setLevel("Team");
-      setDescription("");
-      setEmail("");
-    } catch (err) {
-      console.error("Add Meeting Error:", err);
-      setError("Failed to create meeting");
+    if (!meetingToDelete) {
+      setError("Meeting not found.");
+      return;
     }
-  }
+
+    if (meetingToDelete.creatorEmail !== loggedInUserEmail) {
+      setError("You can only delete meetings you created.");
+      return;
+    }
+
+    setMeetings(meetings.filter((meeting) => meeting.id !== idToDelete));
+  };
+
+  const openEditModal = (meeting: Meeting) => {
+    setCurrentMeeting(meeting);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setCurrentMeeting(null);
+    setIsEditModalOpen(false);
+  };
+
+  const saveEditedMeeting = (updatedMeeting: Meeting) => {
+    setMeetings(
+        meetings.map((meeting) => (meeting.id === updatedMeeting.id ? updatedMeeting : meeting))
+    );
+    setError("");
+  };
 
   return (
-      <section id="meeting-calendar" className="py-12 bg-gray-50 text-black">
-        <h2 className="text-center text-2xl font-bold text-green-600 mb-6">
-          Meeting Calendar
-        </h2>
-
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow">
-          <form onSubmit={addMeeting} className="space-y-4">
-            {error && <div className="text-red-500">{error}</div>}
-            <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Meeting Title"
-                className="w-full p-2 border rounded"
-            />
-            <div className="grid grid-cols-2 gap-4">
+      <section id="meeting-calendar" className="py-24">
+        <h2 className="section-heading">Meeting Calendar</h2>
+        <div className="max-w-4xl p-6 mx-auto rounded-lg shadow-lg bg-navy-light">
+          {/* Add Meeting Form */}
+          <form onSubmit={addMeeting} className="flex flex-col gap-4">
+            {error && <div className="text-sm text-red-500">{error}</div>}
+            <div className="flex flex-col">
+              <label htmlFor="title" className="block mb-1 text-slate-lightest">
+                Meeting Title<span className="text-red-500">*</span>
+              </label>
               <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="p-2 border rounded"
-              />
-              <input
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="p-2 border rounded"
+                  id="title"
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Enter meeting title"
+                  className="p-2 border rounded border-slate focus:outline-none focus:border-green"
+                  required
               />
             </div>
-            <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Meeting Description"
-                className="w-full p-2 border rounded"
-            />
-            <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your Email"
-                className="w-full p-2 border rounded"
-            />
-            <button
-                type="submit"
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-            >
-              Create Meeting
-            </button>
+            {/* Remaining input fields... */}
           </form>
 
-          <h3 className="mt-8 mb-4 text-xl font-semibold text-gray-700">
-            Scheduled Meetings
-          </h3>
-
+          {/* Scheduled Meetings */}
+          <h3 className="mt-12 mb-4 text-xl font-semibold text-green">Scheduled Meetings</h3>
           {meetings.length === 0 ? (
-              <p>No meetings scheduled.</p>
+              <p className="text-slate">No meetings scheduled.</p>
           ) : (
-              <table className="w-full table-auto border-collapse border border-gray-200">
-                <thead>
-                <tr className="bg-gray-100">
-                  <th className="border p-2">Title</th>
-                  <th className="border p-2">Date</th>
-                  <th className="border p-2">Time</th>
-                  <th className="border p-2">Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                {meetings.map((meeting) => (
-                    <tr key={meeting.id} className="hover:bg-gray-50">
-                      <td className="border p-2">{meeting.title}</td>
-                      <td className="border p-2">
-                        {new Date(meeting.date).toLocaleDateString()}
-                      </td>
-                      <td className="border p-2">{meeting.time}</td>
-                      <td className="border p-2">{meeting.description}</td>
-                    </tr>
-                ))}
-                </tbody>
-              </table>
+              <div className="overflow-x-auto">
+                <table className="min-w-full rounded-lg shadow bg-slate-lightest">
+                  <thead>
+                  <tr>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-lightest">
+                      Title
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-lightest">
+                      Date
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-lightest">
+                      Time
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left uppercase text-slate-lightest">
+                      Level
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-center uppercase text-slate-lightest">
+                      Actions
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {meetings.map((meeting) => (
+                      <tr key={meeting.id} className="border-t">
+                        <td className="px-6 py-4 text-sm whitespace-nowrap text-slate">
+                          {meeting.title}
+                        </td>
+                        <td className="px-6 py-4 text-sm whitespace-nowrap text-slate">
+                          {meeting.date}
+                        </td>
+                        <td className="px-6 py-4 text-sm whitespace-nowrap text-slate">
+                          {meeting.time}
+                        </td>
+                        <td className="px-6 py-4 text-sm whitespace-nowrap text-slate">
+                          {meeting.level}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-center whitespace-nowrap">
+                          {meeting.creatorEmail === localStorage.getItem("loggedInUserEmail") && (
+                              <div className="flex justify-center space-x-2">
+                                <button
+                                    onClick={() => openEditModal(meeting)}
+                                    className="text-blue-500 hover:text-blue-700"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                    onClick={() => deleteMeeting(meeting.id)}
+                                    className="text-red-500 hover:text-red-700"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                          )}
+                        </td>
+                      </tr>
+                  ))}
+                  </tbody>
+                </table>
+              </div>
           )}
         </div>
+
+        {/* Edit Meeting Modal */}
+        {currentMeeting && (
+            <EditMeetingModal
+                meeting={currentMeeting}
+                isOpen={isEditModalOpen}
+                onClose={closeEditModal}
+                onSave={saveEditedMeeting}
+            />
+        )}
       </section>
   );
 };

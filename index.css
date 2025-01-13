@@ -1,51 +1,35 @@
-/* Import Tailwind Base Styles */
+/* src/index.css */
+
+/* Import Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Base Styles */
+/* Custom Layer for Global Styles */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-navy-primary text-slate font-sans;
+    @apply font-sans bg-navy-primary text-slate;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply text-slate-lightest;
   }
-}
 
-/* Custom Components */
-@layer components {
-  /* Navigation Links */
-  .nav-link {
-    @apply text-slate hover:text-green transition-colors duration-300;
+  a {
+    @apply text-green;
   }
 
-  /* Primary Button */
-  .btn-primary {
-    @apply px-4 py-2 border border-green text-green 
-           rounded bg-transparent hover:bg-green hover:bg-opacity-10 
-           transition-all duration-300;
+  /* Dark Mode */
+  .dark body {
+    background-color: #ffffff;
+    color: #1e3a8a;
   }
 
-  /* Section Heading */
-  .section-heading {
-    @apply text-2xl md:text-3xl font-bold mb-8 text-slate-lightest 
-           flex items-center gap-4 after:content-[''] after:flex-1 
-           after:h-[1px] after:bg-navy-lightest;
-  }
-
-  /* Skill Bar for Projects/Skills */
-  .skill-bar {
-    @apply h-2 rounded-full bg-navy-lightest overflow-hidden;
-  }
-
-  .skill-progress {
-    @apply h-full bg-green transition-all duration-1000;
-  }
-
-  /* Vertical Text (e.g., Email) */
-  .vertical-text {
-    @apply [writing-mode:vertical-rl] tracking-widest;
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #1e3a8a;
   }
 }

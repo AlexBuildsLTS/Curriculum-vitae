@@ -1,13 +1,9 @@
+// tailwind.config.js
+
 /** @type {import('tailwindcss').Config} */
-export default {
-  // We use class-based dark mode
-  darkMode: 'class',
-
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
-
+module.exports = {
+  darkMode: 'class', // Enable class-based dark mode
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'], // Ensure Tailwind scans all relevant files
   theme: {
     extend: {
       colors: {
@@ -21,12 +17,14 @@ export default {
           light: '#a8b2d1',
           lightest: '#ccd6f6',
         },
-        white: '#e6f1ff',
-        green: '#64ffda',
+        white: '#020725',
+        green: '#108a30',
+        // Add more colors as needed
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      // Add any additional customizations
     },
   },
   plugins: [],

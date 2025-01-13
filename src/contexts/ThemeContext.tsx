@@ -1,10 +1,5 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    ReactNode,
-} from 'react';
+/* src/contexts/ThemeContext.tsx */
+import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 
 interface ThemeContextProps {
     darkMode: boolean;
@@ -17,14 +12,9 @@ const ThemeContext = createContext<ThemeContextProps>({
 });
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // If you want to start in dark by default, set return true below
-    const [darkMode, setDarkMode] = useState<boolean>(() => {
-        const stored = localStorage.getItem('theme');
-        if (stored) {
-            return stored === 'dark';
-        }
-        // Default to light:
-        return false;
+    const [darkMode, setDarkMode] = useState(() => {
+        const savedTheme = localStorage.getItem('theme');
+        return savedTheme === 'dark';
     });
 
     useEffect(() => {
@@ -37,9 +27,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         }
     }, [darkMode]);
 
-    const toggleDarkMode = () => {
-        setDarkMode((prev) => !prev);
-    };
+    const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
     return (
         <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
