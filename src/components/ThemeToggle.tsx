@@ -3,10 +3,10 @@ import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const ThemeToggle: React.FC = () => {
-    const { darkMode, toggleDarkMode } = useTheme();
+    const { darkMode, toggleTheme } = useTheme();
     return (
         <button
-            onClick={toggleDarkMode}
+            onClick={toggleTheme}
             className="p-2 transition-colors duration-300 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700"
             aria-label="Toggle Theme"
         >

@@ -1,39 +1,30 @@
-/* src/contexts/ThemeContext.tsx */
-import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface ThemeContextProps {
+// Define the type for the context
+type ThemeContextType = {
     darkMode: boolean;
-    toggleDarkMode: () => void;
-}
+    toggleTheme: () => void;
+};
 
-const ThemeContext = createContext<ThemeContextProps>({
-    darkMode: false,
-    toggleDarkMode: () => {},
-});
+// Initialize the context with a default value
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [darkMode, setDarkMode] = useState(() => {
-        const savedTheme = localStorage.getItem('theme');
-        return savedTheme === 'dark';
-    });
+    const [darkMode, setDarkMode] = useState(false);
 
-    useEffect(() => {
-        if (darkMode) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    }, [darkMode]);
-
-    const toggleDarkMode = () => setDarkMode((prev) => !prev);
+    const toggleTheme = () => setDarkMode((prev) => !prev);
 
     return (
-        <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+        <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = (): ThemeContextType => {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+};
