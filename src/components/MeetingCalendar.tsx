@@ -12,7 +12,8 @@ interface Meeting {
   description: string;
 }
 
-const BASE_URL = "http://localhost:4000"; // Update this as needed
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+
 
 const MeetingCalendar: React.FC = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
