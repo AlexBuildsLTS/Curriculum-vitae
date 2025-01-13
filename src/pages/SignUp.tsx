@@ -1,4 +1,3 @@
-/* src/pages/SignUp.tsx */
 import React, { useState } from 'react';
 
 export default function SignUp() {

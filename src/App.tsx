@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import CalendarPage from './pages/CalendarPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
 
 const App: React.FC = () => {
     return (
@@ -15,9 +16,10 @@ const App: React.FC = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/calendar" element={<CalendarPage />} />
 
-                {/* New login & signup routes */}
+                {/* Login & SignUp routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} /> {/* Add SignIn route */}
             </Routes>
         </Layout>
     );

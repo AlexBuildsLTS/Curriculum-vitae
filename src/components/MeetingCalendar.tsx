@@ -12,8 +12,7 @@ interface Meeting {
   description: string;
 }
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
-
+const BASE_URL = "http://localhost:4000"; // Update this as needed
 
 const MeetingCalendar: React.FC = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
@@ -137,7 +136,7 @@ const MeetingCalendar: React.FC = () => {
             />
             <button
                 type="submit"
-                className="px-4 py-2 bg-green-800 text-white font-semibold rounded hover:bg-green-900 transition duration-300"
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
               Create Meeting
             </button>

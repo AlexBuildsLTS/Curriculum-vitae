@@ -14,7 +14,7 @@ const app = express();
 // Configure CORS to allow requests from your Netlify frontend
 app.use(
     cors({
-        origin: 'https://alexvite.netlify.app', // Your Netlify frontend URL
+        origin: 'https://alexvite.netlify.app/', // Your Netlify frontend URL
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
     })
@@ -24,7 +24,7 @@ app.use(
 app.use(express.json());
 
 // ENV variables or fallback defaults
-const JWT_SECRET = process.env.JWT_SECRET || 'SUPER_SECRET';
+const JWT_SECRET = process.env.JWT_SECRET || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNjc2NzM3MSwiZXhwIjoxNzM2ODUzNzcxfQ.nuypcFggW6eQZc_BJR9y5Ijcxnj0y1-utbBn5EhzF94';
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASS = process.env.DB_PASS || 'root';
@@ -192,6 +192,29 @@ app.delete('/api/meetings/:id', authMiddleware, adminOnly, async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Cannot delete meeting' });
+    }
+});
+app.post("/api/signup", async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: "All fields are required." });
+    }
+
+    try {
+        const hash = await bcrypt.hash(password, 10);
+        const [result] = await pool.query(
+            `INSERT INTO users (username, password_hash, role) VALUES (?, ?, 'user')`,
+            [email, hash]
+        );
+        res.status(201).json({ message: "User registered successfully." });
+    } catch (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            res.status(400).json({ error: "User already exists." });
+        } else {
+            console.error(err);
+            res.status(500).json({ error: "Server error." });
+        }
     }
 });
 
