@@ -1,8 +1,7 @@
-/* src/components/MeetingCalendar.tsx */
 import "react-calendar/dist/Calendar.css";
 import React, { useState, useEffect } from "react";
-import EditMeetingModal from "./EditMeetingModal";
 
+// Define the Meeting interface
 interface Meeting {
   id: number;
   title: string;
@@ -13,245 +12,167 @@ interface Meeting {
   description: string;
 }
 
-// Define the backend URL
-const BASE_URL = "https://curriculum-vitae-hbcz.onrender.com";
-
-/**
- * Example context or storage for token/role.
- */
-function getAuth() {
-  const token = localStorage.getItem("token") || "";
-  const role = localStorage.getItem("role") || "user";
-  return { token, role };
-}
+const BASE_URL = "http://localhost:4000"; // Update this as needed
 
 const MeetingCalendar: React.FC = () => {
-  // State for the meeting fields
   const [meetings, setMeetings] = useState<Meeting[]>([]);
-  const [title, setTitle] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const [time, setTime] = useState<string>("");
-  const [level, setLevel] = useState<string>("Team");
-  const [participants, setParticipants] = useState<string[]>([""]);
-  const [description, setDescription] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [level, setLevel] = useState("Team");
+  const [description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
-  // For editing
-  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [currentMeeting, setCurrentMeeting] = useState<Meeting | null>(null);
-
-  // Fetch meetings from backend
   useEffect(() => {
     fetchMeetings();
   }, []);
 
-  async function fetchMeetings(): Promise<void> {
+  async function fetchMeetings() {
     try {
       const res = await fetch(`${BASE_URL}/api/meetings`);
-      if (!res.ok) {
-        throw new Error("Failed to fetch meetings");
-      }
+      if (!res.ok) throw new Error("Failed to fetch meetings");
       const data: Meeting[] = await res.json();
       setMeetings(data);
-    } catch (err: unknown) {
-      const errorMessage =
-          err instanceof Error ? err.message : "Unknown error occurred";
-      console.error("Fetch Meetings Error:", errorMessage);
+    } catch (err) {
+      console.error("Fetch Meetings Error:", err);
       setError("Failed to load meetings");
     }
   }
 
-  const validateEmails = (emails: string[]): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emails.every((email) => emailRegex.test(email));
-  };
-
-  async function addMeeting(e: React.FormEvent<HTMLFormElement>) {
+  async function addMeeting(e: React.FormEvent) {
     e.preventDefault();
     setError("");
 
-    const trimmedTitle = title.trim();
-    const trimmedDate = date.trim();
-    const trimmedTime = time.trim();
-    const trimmedLevel = level.trim();
-    const trimmedParticipants = participants.map((email) => email.trim());
-    const trimmedDescription = description.trim();
-
-    if (
-        !trimmedTitle ||
-        !trimmedDate ||
-        !trimmedTime ||
-        !trimmedLevel ||
-        !trimmedDescription
-    ) {
+    if (!title.trim() || !date.trim() || !time.trim() || !description.trim()) {
       setError("Please fill in all required fields.");
       return;
     }
-    if (
-        trimmedParticipants.length === 0 ||
-        trimmedParticipants.some((email) => email === "")
-    ) {
-      setError("Please provide at least one participant email.");
-      return;
-    }
-    if (!validateEmails(trimmedParticipants)) {
-      setError("Please enter valid email addresses.");
+
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please provide a valid email.");
       return;
     }
 
     const newMeeting = {
-      title: trimmedTitle,
-      date: trimmedDate,
-      time: trimmedTime,
-      level: trimmedLevel,
-      participants: trimmedParticipants,
-      description: trimmedDescription,
+      title,
+      date,
+      time,
+      level,
+      participants: [email],
+      description,
     };
 
-    const { token } = getAuth();
     try {
       const res = await fetch(`${BASE_URL}/api/meetings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newMeeting),
       });
+
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || "Failed to create meeting");
       }
+
       const created = await res.json();
       setMeetings([...meetings, created]);
       setTitle("");
       setDate("");
       setTime("");
       setLevel("Team");
-      setParticipants([""]);
       setDescription("");
-    } catch (err: unknown) {
-      const errorMessage =
-          err instanceof Error ? err.message : "Unknown error occurred";
-      console.error("Add Meeting Error:", errorMessage);
-      setError(errorMessage);
+      setEmail("");
+    } catch (err) {
+      console.error("Add Meeting Error:", err);
+      setError("Failed to create meeting");
     }
   }
-
-  async function deleteMeeting(idToDelete: number) {
-    const { token, role } = getAuth();
-    if (role !== "admin") {
-      alert("Only admin can delete. You're not admin!");
-      return;
-    }
-
-    try {
-      const res = await fetch(`${BASE_URL}/api/meetings/${idToDelete}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Failed to delete meeting");
-      }
-      setMeetings((prev) => prev.filter((m) => m.id !== idToDelete));
-    } catch (err: unknown) {
-      const errorMessage =
-          err instanceof Error ? err.message : "Unknown error occurred";
-      console.error("Delete Meeting Error:", errorMessage);
-      setError(errorMessage || "An error occurred while deleting the meeting.");
-    }
-  }
-
-  const openEditModal = (meeting: Meeting) => {
-    setCurrentMeeting(meeting);
-    setIsEditModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setCurrentMeeting(null);
-    setIsEditModalOpen(false);
-  };
-
-  const saveEditedMeeting = (updatedMeeting: Meeting) => {
-    setMeetings((prev) =>
-        prev.map((m) => (m.id === updatedMeeting.id ? updatedMeeting : m))
-    );
-  };
 
   return (
-      <section id="meeting-calendar" className="py-24">
-        <h2 className="section-heading">Meeting Calendar</h2>
-        <div className="max-w-4xl p-6 mx-auto rounded-lg shadow-lg bg-white text-black">
-          <form onSubmit={addMeeting} className="flex flex-col gap-4">
-            {error && <div className="text-sm text-red-500">{error}</div>}
-            {/* Meeting fields */}
+      <section id="meeting-calendar" className="py-12 bg-gray-50 text-black">
+        <h2 className="text-center text-2xl font-bold text-green-600 mb-6">
+          Meeting Calendar
+        </h2>
+
+        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow">
+          <form onSubmit={addMeeting} className="space-y-4">
+            {error && <div className="text-red-500">{error}</div>}
+            <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Meeting Title"
+                className="w-full p-2 border rounded"
+            />
+            <div className="grid grid-cols-2 gap-4">
+              <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="p-2 border rounded"
+              />
+              <input
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  className="p-2 border rounded"
+              />
+            </div>
+            <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Meeting Description"
+                className="w-full p-2 border rounded"
+            />
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your Email"
+                className="w-full p-2 border rounded"
+            />
             <button
                 type="submit"
-                className="px-4 py-2 font-semibold text-green-700 border border-green-700 rounded hover:bg-green-700 hover:text-white"
+                className="px-4 py-2 bg-green-800 text-white font-semibold rounded hover:bg-green-900 transition duration-300"
             >
               Create Meeting
             </button>
           </form>
-          <h3 className="mt-12 mb-4 text-xl font-bold text-green-700">
+
+          <h3 className="mt-8 mb-4 text-xl font-semibold text-gray-700">
             Scheduled Meetings
           </h3>
+
           {meetings.length === 0 ? (
-              <p className="text-black">No meetings scheduled.</p>
+              <p>No meetings scheduled.</p>
           ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full rounded-lg shadow bg-white text-black">
-                  <thead>
-                  <tr className="border-b">
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Level</th>
-                    <th>Participants</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {meetings.map((meeting) => (
-                      <tr key={meeting.id} className="border-b">
-                        <td>{meeting.title}</td>
-                        <td>{new Date(meeting.date).toLocaleDateString()}</td>
-                        <td>{meeting.time}</td>
-                        <td>{meeting.level}</td>
-                        <td>{meeting.participants.join(", ")}</td>
-                        <td>{meeting.description}</td>
-                        <td>
-                          <button
-                              onClick={() => openEditModal(meeting)}
-                              className="mr-2 text-blue-600 hover:text-blue-800"
-                          >
-                            Edit
-                          </button>
-                          <button
-                              onClick={() => deleteMeeting(meeting.id)}
-                              className="text-red-600 hover:text-red-800"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                  ))}
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full table-auto border-collapse border border-gray-200">
+                <thead>
+                <tr className="bg-gray-100">
+                  <th className="border p-2">Title</th>
+                  <th className="border p-2">Date</th>
+                  <th className="border p-2">Time</th>
+                  <th className="border p-2">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                {meetings.map((meeting) => (
+                    <tr key={meeting.id} className="hover:bg-gray-50">
+                      <td className="border p-2">{meeting.title}</td>
+                      <td className="border p-2">
+                        {new Date(meeting.date).toLocaleDateString()}
+                      </td>
+                      <td className="border p-2">{meeting.time}</td>
+                      <td className="border p-2">{meeting.description}</td>
+                    </tr>
+                ))}
+                </tbody>
+              </table>
           )}
         </div>
-        {currentMeeting && (
-            <EditMeetingModal
-                meeting={currentMeeting}
-                isOpen={isEditModalOpen}
-                onClose={closeEditModal}
-                onSave={saveEditedMeeting}
-            />
-        )}
       </section>
   );
 };
