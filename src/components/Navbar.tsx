@@ -1,9 +1,9 @@
-/* src/components/Navbar.tsx */
+// src/components/Navbar.tsx
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import * as Icons from "lucide-react";
-import { Github, Linkedin } from "lucide-react"; // Add LinkedIn icon
+import { Github, Linkedin } from "lucide-react";
 import profilePicture from "../assets/profilepicture.png";
 import ThemeToggle from "./ThemeToggle";
 
@@ -13,6 +13,8 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
+  const location = useLocation();
+
   const navItems = [
     { label: "Home", to: "/" },
     { label: "About", to: "about" },
@@ -34,16 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
               />
             </RouterLink>
             {navItems.map((item, index) =>
-                item.to.startsWith("/") ? (
-                    <RouterLink
-                        key={item.label}
-                        to={item.to}
-                        className="nav-link"
-                        style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      {item.label}
-                    </RouterLink>
-                ) : (
+                location.pathname === "/" ? (
                     <ScrollLink
                         key={item.label}
                         to={item.to}
@@ -54,13 +47,21 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
                     >
                       {item.label}
                     </ScrollLink>
+                ) : (
+                    <RouterLink
+                        key={item.label}
+                        to={`/#${item.to}`}
+                        className="nav-link"
+                        style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      {item.label}
+                    </RouterLink>
                 )
             )}
           </div>
 
           {/* Right Side */}
           <div className="flex items-center gap-6">
-            {/* Social Icons */}
             <a
                 href="https://github.com/AlexBuildsLTS"
                 target="_blank"
@@ -79,19 +80,13 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
             >
               <Linkedin size={24} />
             </a>
-
-            {/* Calendar Icon */}
             <RouterLink
                 to="/calendar"
                 className="p-2 text-green hover:text-slate-lightest"
             >
               <Icons.Calendar size={24} />
             </RouterLink>
-
-            {/* ThemeToggle */}
             <ThemeToggle />
-
-            {/* Login Button */}
             <RouterLink
                 to="/login"
                 className="px-4 py-2 text-sm font-semibold border rounded text-green border-green hover:bg-green hover:text-navy-primary"

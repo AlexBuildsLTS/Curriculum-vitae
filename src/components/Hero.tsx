@@ -6,7 +6,7 @@ export default function Hero() {
           Hi, my name is
         </h1>
         <h2 className="mb-4 text-3xl font-bold sm:text-6xl">
-          Alex Youssef.
+          Alex Youssef
         </h2>
         <h3 className="mb-6 text-xl font-bold sm:text-5xl text-slate-light">
           I’m passionate about crafting accessible, human-centered web applications.

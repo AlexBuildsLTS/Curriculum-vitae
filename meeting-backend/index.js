@@ -110,22 +110,38 @@ app.post('/api/create-admin', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
     try {
+        // Fetch user by username from the database
         const [rows] = await pool.query('SELECT * FROM users WHERE username=?', [username]);
+
+        // Check if the user exists
         if (rows.length === 0) {
+            console.log('User not found:', username);
             return res.status(400).json({ error: 'User not found' });
         }
+
         const user = rows[0];
+
+
         const match = await bcrypt.compare(password, user.password_hash);
+        console.log('Password Match:', match); // Log the result of bcrypt comparison
+
+
         if (!match) {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
+
+        // If passwords match, generate a JWT token
         const token = createToken({ id: user.id, role: user.role });
         return res.json({ token, role: user.role });
     } catch (err) {
-        console.error(err);
+        console.error(err); // Log server-side errors
         return res.status(500).json({ error: 'Server error' });
+        const match = await bcrypt.compare(password, user.password_hash);
+        console.log('Password Match:', match);
     }
+
 });
+
 
 // C) GET /api/meetings (public)
 app.get('/api/meetings', async (req, res) => {
