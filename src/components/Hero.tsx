@@ -14,7 +14,7 @@ export default function Hero() {
         <p className="max-w-xl mb-8 text-base sm:text-lg text-slate-light">
           With a strong focus on scalable backend architecture and intuitive user interfaces, 
           I specialize in building exceptional digital experiences. My recent work includes 
-          developing a marketplace app, a growth analytics tool, and an online bookstore platform.
+          developing a Marketplace website and application, AI Assistant bot, Schedule app, Website for ordering for example food, and more projects ive done can be found in my github
         </p>
         <a href="#projects" className="btn-primary">Check out my work</a>
       </div>
