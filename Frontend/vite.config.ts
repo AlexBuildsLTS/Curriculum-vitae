@@ -1,11 +1,9 @@
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    hmr: {
-      overlay: true,
-    },
+  build: {
+    outDir: '../dist', // Output directory relative to the root
   },
 });
