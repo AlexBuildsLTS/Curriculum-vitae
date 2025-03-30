@@ -1,0 +1,72 @@
+/* src/styles/global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Base Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans bg-navy-primary text-slate;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-slate-lightest;
+  }
+
+  /* Dark Mode Styles */
+  .dark body {
+    @apply bg-white text-navy-primary;
+  }
+
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    @apply text-navy-primary;
+  }
+}
+
+/* Custom Components */
+@layer components {
+  /* Navigation Links */
+  .nav-link {
+    @apply transition-colors duration-300 text-slate hover:text-green;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    @apply px-4 py-2 transition-all duration-300 bg-transparent border rounded border-green text-green hover:bg-green hover:bg-opacity-10;
+  }
+
+  /* Section Heading */
+  .section-heading {
+    @apply text-2xl md:text-3xl font-bold mb-8 text-slate-lightest 
+           flex items-center gap-4 after:content-[''] after:flex-1 
+           after:h-[1px] after:bg-navy-lightest;
+  }
+
+  /* Skill Bar for Projects/Skills */
+  .skill-bar {
+    @apply h-2 overflow-hidden rounded-full bg-navy-lightest;
+  }
+
+  .skill-progress {
+    @apply h-full transition-all duration-1000;
+  }
+
+  /* Vertical Text (e.g., Email) */
+  .vertical-text {
+    @apply [writing-mode:vertical-rl] tracking-widest;
+  }
+}

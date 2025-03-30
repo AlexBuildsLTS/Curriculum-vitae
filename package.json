@@ -11,8 +11,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+=======
+    "@types/react-dom": "^18.3.1",
+    "axios": "^1.8.4",
+    "lucide": "^0.485.0",
+>>>>>>> 254fa1f (minor fixes)
     "nodemailer": "^6.9.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -21,6 +27,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+<<<<<<< HEAD
+=======
+    "@types/react": "^18.3.20",
+>>>>>>> 254fa1f (minor fixes)
     "@types/react-scroll": "^1.8.10",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
@@ -36,7 +46,11 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5.4.4",
     "typescript-eslint": "^7.18.0",
+<<<<<<< HEAD
     "vite": "^5.4.11",
+=======
+    "vite": "^6.2.3",
+>>>>>>> 254fa1f (minor fixes)
     "vite-plugin-eslint": "^1.8.1"
   },
   "overrides": {
@@ -44,4 +58,8 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.18"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 254fa1f (minor fixes)

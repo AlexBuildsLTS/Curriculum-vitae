@@ -1,12 +1,22 @@
 # `Meeting Calendar Applcation´
 
 - This project is a ReactJS-based Meeting Calendar Application designed to:
+<<<<<<< HEAD
 -  Display a calendar where users can view scheduled meetings.
 -  Allow users to manage meetings (add, edit, delete).
 -  Provide a responsive and user-friendly interface with theme toggling.
 -  The application follows a modular approach, with each component handling a specific functionality, ensuring reusability, scalability, and maintainability.
 
 ## Features
+=======
+- Display a calendar where users can view scheduled meetings.
+- Allow users to manage meetings (add, edit, delete).
+- Provide a responsive and user-friendly interface with theme toggling.
+- The application follows a modular approach, with each component handling a specific functionality, ensuring reusability, scalability, and maintainability.
+
+## Features
+
+>>>>>>> 254fa1f (minor fixes)
 - [x] Responsive Design: Fully responsive interface for seamless use on desktop and mobile devices.
 - [x] Light/Dark Theme: Toggle between light and dark modes for a personalized user experience.
 - [x] Interactive Calendar: View scheduled meetings in a user-friendly calendar interface.
@@ -26,8 +36,13 @@
 - [x] Tailwind CSS: For styling and responsive design.
 - [x] React Router: For navigation within the application.
 
+<<<<<<< HEAD
 
 ### ProjectStructure
+=======
+### ProjectStructure
+
+>>>>>>> 254fa1f (minor fixes)
 ```bash
 src/
 ├── components/
@@ -42,9 +57,14 @@ src/
 ├── App.tsx                       # Root component for app routing
 └── index.tsx                     # Entry point of the application
 
+<<<<<<< HEAD
 ```
 
 **Components and Their Roles**
+=======
+```**Components and Their Roles**
+
+>>>>>>> 254fa1f (minor fixes)
 - Pages
 - <CalendarPage.tsx:> Entry point for the calendar feature. Imports and renders the
 
@@ -103,7 +123,11 @@ src/
 
 - #### **How Components Work Together**
 
+<<<<<<< HEAD
 ```
+=======
+``` calendar
+>>>>>>> 254fa1f (minor fixes)
 CalendarPage.tsx: Parent for the calendar feature.
 MeetingCalendar.tsx: Manages the calendar grid and meeting interactions.
 EditMeetingModal.tsx: Handles meeting editing, integrated with the calendar's state.
@@ -117,13 +141,25 @@ git clone <repository-url:>
 cd <repository-folder:>
 Install Dependencies:
 
+<<<<<<< HEAD
 ```
 npm install
+=======
+``` npm
+
+npm install
+
+>>>>>>> 254fa1f (minor fixes)
 ```
 
 - Start the Development Server:
 
+<<<<<<< HEAD
 ```
+=======
+``` npm
+
+>>>>>>> 254fa1f (minor fixes)
 npm start
 ```
 
@@ -132,7 +168,11 @@ npm start
 - Conclusion
 - This project demonstrates:
 
+<<<<<<< HEAD
 ````
+=======
+````Module
+>>>>>>> 254fa1f (minor fixes)
 Modularizing components for reusability and scalability.
 Dynamically rendering data to enhance interactivity
 Combining static layouts with dynamic content for a professional and user-friendly UI.
@@ -140,6 +180,7 @@ It serves as an excellent example of leveraging modern tools like React, Tailwin
 create an interactive, dynamic web application```
 
 ````
+<<<<<<< HEAD
 - Future Goals
 
 ### Integrate Backend Support
@@ -172,3 +213,39 @@ create an interactive, dynamic web application```
 * [ ] 
 * [ ] Extend the theme toggling functionality to support multiple themes (e.g., high contrast, corporate styles).
 * [ ] 
+=======
+
+- Future Goals
+
+### Integrate Backend Support
+
+- [ ] Use a backend service (e.g., Node.js, Express, or Django) for storing and managing meeting data persistently.
+- [ ] Implement RESTful APIs to fetch, create, update, and delete meeting records.
+- [ ] User Authentication:
+- [ ]
+- [ ] Add user login and registration functionality to make meetings user-specific.
+- [ ] Use JWT or OAuth for secure authentication and authorization.
+- [ ] Notifications and Reminders:
+- [ ]
+- [ ] Implement email or push notifications to remind users of upcoming meetings.
+- [ ] Allow users to customize reminder intervals.
+- [ ] Advanced Meeting Features:
+- [ ]
+- [ ] Support recurring meetings with customizable frequency (e.g., daily, weekly, monthly).
+- [ ] Add the ability to attach documents or links to a meeting.
+- [ ] Improved Search and Filter Options:
+- [ ]
+- [ ] Enable users to search for meetings by title, participants, or date range.
+- [ ] Add filters for meeting levels, dates, and time.
+- [ ] Multilingual Support:
+- [ ]
+- [ ] Provide options for users to view the application in multiple languages.
+- [ ] Use a library like react-i18next for implementing translations.
+- [ ] Mobile Application:
+- [ ]
+- [ ] Build a mobile version of the application using React Native for better accessibility on smartphones.
+- [ ] Customizable Themes:
+- [ ]
+- [ ] Extend the theme toggling functionality to support multiple themes (e.g., high contrast, corporate styles).
+- [ ]
+>>>>>>> 254fa1f (minor fixes)
