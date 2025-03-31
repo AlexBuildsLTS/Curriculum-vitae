@@ -1,5 +1,6 @@
 /* src/index.css */
 
+
 /* Import Tailwind directives */
 @tailwind base;
 @tailwind components;
@@ -21,6 +22,7 @@
     }
 
     a {
+        /* stylelint-disable-next-line at-rule-no-unknown */
         @apply text-green;
     }
 
